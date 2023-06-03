@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@google-cloud/storage": "^6.10.1",
+    "formidable": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/formidable": "^2.0.6"
+  }
+}
