@@ -1,23 +1,60 @@
 import ImageCard from '@/components/colleges&universities/ImageCard'
 import Left from '@/components/find-college/Left'
-import React from 'react'
+import { log } from 'console';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
+
+
+interface University {
+	_id: string;
+	name: string;
+	phone: number;
+	email: string;
+	address: string;
+	links: string;
+	deadlines: {
+		_id: string,
+		term: string,
+		level: string,
+		deadline: Date
+	};
+	image?: string;
+}
 
 function Explore() {
+	const [universitiesData, setuniversitiesData] = useState<University[]>([]);
+	const router=useRouter()
 
-	const universities = 45
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
+
+	async function fetchData() {
+		try {
+			const response = await fetch('http://localhost:9000/api/v1/universities');
+			const universitiesData = await response.json();
+			setuniversitiesData(universitiesData);
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	}
+
 
 	return (
 
-		<div>
+		<div className='flex flex-col bg-gray-100'>
 			<div className=" bg-[#5acccc] w-full h-28 flex items-center">
-				<h3 className="text-bold text-3xl text-black ml-2">Explore colleges</h3>
+				<h3 className="text-bold text-3xl text-black ml-2">Explore Universities</h3>
 			</div>
 			<div className="flex-col md:flex-row flex  ">
 				<Left />
 				<div className="flex flex-col w-full">
-					<div className="flex justify-between items-center m-6">
+					<div className="w-full h-[140px] bg-gray-200"> </div>
+					<div className="flex justify-between items-center m-6 ">
 						<div className="xl:text-3xl text-sm text-bold ">
-							{universities} Universities Found
+							{universitiesData.length} Universities Found
 						</div>
 						<div className="flex items-center space-x-2 ">
 							<span className="mr-2">Sort by</span>
@@ -28,30 +65,18 @@ function Explore() {
 							</select>
 						</div>
 					</div>
-					<div className="flex gap-2 ml-6 flex-wrap justify-center items-center">
+					<div className="flex gap-2 ml-6 flex-wrap justify-center items-center ">
 						{/* college card */}
-						<ImageCard
-							imageUrl="https://th.bing.com/th/id/OIP.zNAZV-QcWXyjJIjwzL999QHaCf?w=276&h=117&c=7&r=0&o=5&pid=1.7"
-							collegeName="Hawassa University"
-							location="Hawassa, Sidama Region"
-						/>
-						<ImageCard
-							imageUrl="https://th.bing.com/th/id/OIP.zNAZV-QcWXyjJIjwzL999QHaCf?w=276&h=117&c=7&r=0&o=5&pid=1.7"
-							collegeName="Hawassa University"
-							location="Hawassa, Sidama Region"
-						/>
-						{/* college card */} 
-						<ImageCard
-							imageUrl="https://th.bing.com/th/id/OIP.zNAZV-QcWXyjJIjwzL999QHaCf?w=276&h=117&c=7&r=0&o=5&pid=1.7"
-							collegeName="Hawassa University"
-							location="Hawassa, Sidama Region"
-						/>
-						<ImageCard
-							imageUrl="https://th.bing.com/th/id/OIP.zNAZV-QcWXyjJIjwzL999QHaCf?w=276&h=117&c=7&r=0&o=5&pid=1.7"
-							collegeName="Hawassa University"
-							location="Hawassa, Sidama Region"
-						/>
-						<div className="container mx-auto py-10">
+						{universitiesData.map(university => (
+							<ImageCard
+								imageUrl="https://th.bing.com/th/id/R.46e6f26dcd40efb195f9463197f84a93?rik=HBX%2bEqjVzojxDg&pid=ImgRaw&r=0"
+								collegeName={university.name}
+								location={university.address}
+								id={university._id}
+								onClick={() => router.push(`/detail/${university._id}`)}
+							/>
+						))}
+						<div className="container mx-auto py-10 bg-[#5acccc]">
 							<h1 className="text-3xl font-bold text-center mb-10">
 								How much does it cost to apply to college?
 							</h1>
@@ -80,3 +105,5 @@ function Explore() {
 }
 
 export default Explore
+
+

@@ -1,17 +1,22 @@
 'use client'
-
 import React, { ChangeEvent, useState } from 'react'
-import Image from 'next/image';
-import Link from 'next/link';
-import { string } from 'yup';
-import { smartdevicemanagement_v1 } from 'googleapis';
+
+import RegionCheckBox from './RegionCheckBox'
 import Button from './Button';
 import InputField from './InputField';
+import FirstYearOptionCheckbox, { firstYearOptions } from './FirstYearOptionCheckBox';
+import CampusSettingOptionCheckbox, { campusSettingOptions } from './CampusSettingOptions';
+import FinancialAidOptionCheckbox, { financialAidOptions } from './FinancialAidOptions';
+import MinorityCheckbox from './MinorityCheckBox';
+import MastersOptionCheckBox, { mastersOptions } from './MasterOptionCheckBox';
+import TotalEnrollmentSizeOptionCheckBox, { totalEnrollmentSizeOptions } from './TotalEnrollmentSizeOptionCheckBox';
+import { typeOptions } from './TypeOptionsCheckBox';
+import SpecializedMissionOptionCheckBox, { specializedMissionOptions } from './SpecializedMissionOptionCheckBox';
 
 
 function Left() {
 
-  const [showStates, setShowStates] = useState<{[id:string]:boolean}>({})
+  const [showStates, setShowStates] = useState<{ [id: string]: boolean }>({})
 
   const toggleShow = (id: string) => {
     setShowStates((prevShowStates) => ({
@@ -20,29 +25,31 @@ function Left() {
     }));
   };
 
+  const [selectedFirstYearOptions, setSelectedFirstYearOptions] = useState<string[]>([]);
 
+  const handleFirstYearOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    setSelectedFirstYearOptions((prevSelectedOptions) => {
+      if (checked) {
+        return [...prevSelectedOptions, name];
+      } else {
+        return prevSelectedOptions.filter((option) => option !== name);
+      }
+    });
+  };
 
+  const [selectedMastersOptions, setSelectedMastersOptions] = useState<string[]>([]);
 
-  interface RegionCheckboxProps {
-    region: string;
-    checked: boolean;
-    onChange: ChangeEvent<HTMLInputElement>;
-  }
-  const RegionCheckbox: React.FC<RegionCheckboxProps> = ({ region, checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={region}
-        className="bg-gray-50 border-blue-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={region}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={region} className="text-sm ml-3 font-medium text-gray-900">
-        {region}
-      </label>
-    </div>
-  );
+  const handleMastersOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setSelectedMastersOptions((prevSelectedOptions) => {
+      if (checked) {
+        return [...prevSelectedOptions, name];
+      } else {
+        return prevSelectedOptions.filter((option) => option !== name);
+      }
+    });
+  };
 
 
   const regions = [
@@ -70,163 +77,10 @@ function Left() {
     }
   };
 
-  const firstYearOptions = [
-    {
-      id: "self-reported-test-scores",
-      label: "Accepts self-reported test scores",
-    },
-    {
-      id: "no-application-fee",
-      label: "Charges no application fee",
-    },
-    {
-      id: "no-personal-essay",
-      label: "No personal essay required",
-    },
-    {
-      id: "no-letter-of-recommendation",
-      label: "No letter of recommendation required",
-    },
-    {
-      id: "test-optional",
-      label: "Test Optional/Flexible",
-    },
-  ];
-
-  interface FirstYearOptionCheckboxProps {
-    option: {
-      id: string;
-      lable: string;
-    };
-    checked: boolean;
-    onChange: ChangeEvent<HTMLInputElement>;
-
-  }
-  const FirstYearOptionCheckbox: React.FC<FirstYearOptionCheckboxProps> = ({ option, checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={option.id}
-        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={option.id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={option.id} className="text-sm ml-3 font-medium text-gray-900">
-        {option.lable}
-      </label>
-    </div>
-  );
-
-  const [selectedFirstYearOptions, setSelectedFirstYearOptions] = useState<string[]>([]);
-
-  const handleFirstYearOptionChange = (e:ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    if (checked) {
-      setSelectedFirstYearOptions((prevSelectedOptions) => [...prevSelectedOptions, name]);
-    } else {
-      setSelectedFirstYearOptions((prevSelectedOptions) =>
-        prevSelectedOptions.filter((option) => option !== name)
-      );
-    }
-  };
-
-  const mastersOptions = [
-    {
-      id: "self-reported-test-scores",
-      label: "Accepts self-reported test scores",
-    },
-    {
-      id: "no-application-fee",
-      label: "Charges no application fee",
-    },
-    {
-      id: "guaranteed-admission",
-      label: "Guaranteed admission program",
-    },
-    {
-      id: "no-personal-essay",
-      label: "No personal essay required",
-    },
-    {
-      id: "no-letter-of-recommendation",
-      label: "No letter of recommendation required",
-    },
-    {
-      id: "test-optional",
-      label: "Test Optional/Flexible",
-    },
-  ];
-
-  interface MastersOptionCheckbox extends FirstYearOptionCheckboxProps {
-
-  }
-  const MastersOptionCheckbox: React.FC<MastersOptionCheckbox> = ({ option, checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={option.id}
-        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={option.id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={option.id} className="text-sm ml-3 font-medium text-gray-900">
-        {option.lable}
-      </label>
-    </div>
-  );
-
-  const [selectedmastersOptions, setSelectedMastersOptions] = useState<string[]>([]);
-
-  const handleMastersOptionChange = (e) => {
-    const { name, checked } = e.target;
-    if (checked) {
-      setSelectedMastersOptions((prevSelectedOptions) => [...prevSelectedOptions, name]);
-    } else {
-      setSelectedMastersOptions((prevSelectedOptions) =>
-        prevSelectedOptions.filter((option) => option !== name)
-      );
-    }
-  };
-
-  const campusSettingOptions = [
-    {
-      id: "rural",
-      label: "Rural",
-    },
-    {
-      id: "urban",
-      label: "Urban",
-    },
-    {
-      id: "suburban",
-      label: "Suburban",
-    },
-  ];
-
-  interface CampusSettingOptionCheckboxProps extends MastersOptionCheckbox {
-
-  }
-  const CampusSettingOptionCheckbox: React.FC<CampusSettingOptionCheckboxProps> = ({ option, checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={option.id}
-        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={option.id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={option.id} className="text-sm ml-3 font-medium text-gray-900">
-        {option.lable}
-      </label>
-    </div>
-  );
 
   const [selectedCampusSettingOptions, setSelectedCampusSettingOptions] = useState<string[]>([]);
 
-  const handleCampusSettingOptionChange = (e:ChangeEvent<HTMLInputElement>) => {
+  const handleCampusSettingOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     if (checked) {
       setSelectedCampusSettingOptions((prevSelectedOptions) => [...prevSelectedOptions, name]);
@@ -237,44 +91,10 @@ function Left() {
     }
   };
 
-  const financialAidOptions = [
-    {
-      id: "international-aid",
-      label: "Offers aid for international students",
-    },
-    {
-      id: "merit-based-aid",
-      label: "Offers merit-based aid",
-    },
-    {
-      id: "need-based-aid",
-      label: "Offers need-based aid",
-    },
-  ];
-
-  interface FinancialAidOptionCheckboxProps extends CampusSettingOptionCheckboxProps{
-
-  }
-
-  const FinancialAidOptionCheckbox:React.FC<FinancialAidOptionCheckboxProps> = ({ option, checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={option.id}
-        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={option.id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={option.id} className="text-sm ml-3 font-medium text-gray-900">
-        {option.lable}
-      </label>
-    </div>
-  );
 
   const [selectedFinancialAidOptions, setSelectedFinancialAidOptions] = useState<string[]>([]);
 
-  const handleFinancialAidOptionChange = (e:ChangeEvent<HTMLInputElement>) => {
+  const handleFinancialAidOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     if (checked) {
       setSelectedFinancialAidOptions((prevSelectedOptions) => [...prevSelectedOptions, name]);
@@ -285,67 +105,17 @@ function Left() {
     }
   };
 
-  const minorityCheckbox = {
-    id: "minority-serving-institution",
-    label: "Minority serving institution",
-  };
-interface MinorityCheckboxProps extends CampusSettingOptionCheckboxProps{
 
-}
-  const MinorityCheckbox:React.FC<MinorityCheckboxProps> = ({ checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={minorityCheckbox.id}
-        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={minorityCheckbox.id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={minorityCheckbox.id} className="text-sm ml-3 font-medium text-gray-900">
-        {minorityCheckbox.label}
-      </label>
-    </div>
-  );
   const [selectedMinorityCheckbox, setSelectedMinorityCheckbox] = useState(false);
 
-  const handleMinorityCheckboxChange = (e:ChangeEvent<HTMLInputElement>) => {
+  const handleMinorityCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     setSelectedMinorityCheckbox(checked);
   };
-  const typeOptions = [
-    {
-      id: "public",
-      label: "Public",
-    },
-    {
-      id: "private",
-      label: "Private",
-    },
-  ];
-
-  interface TypeOptionCheckboxProps extends MinorityCheckboxProps{
-
-  }
-  const TypeOptionCheckbox:React.FC<TypeOptionCheckboxProps> = ({ option, checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={option.id}
-        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={option.id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={option.id} className="text-sm ml-3 font-medium text-gray-900">
-        {option.lable}
-      </label>
-    </div>
-  );
 
   const [selectedTypeOptions, setSelectedTypeOptions] = useState<string[]>([]);
 
-  const handleTypeOptionChange = (e:ChangeEvent<HTMLInputElement>) => {
+  const handleTypeOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     if (checked) {
       setSelectedTypeOptions((prevSelectedOptions) => [...prevSelectedOptions, name]);
@@ -356,41 +126,11 @@ interface MinorityCheckboxProps extends CampusSettingOptionCheckboxProps{
     }
   };
 
-  const totalEnrollmentSizeOptions = [
-    {
-      id: "small",
-      label: "Small (2,000 and under)",
-    },
-    {
-      id: "medium",
-      label: "Medium (2,001 to 14,999)",
-    },
-    {
-      id: "large",
-      label: "Large (15,000+)",
-    },
-  ];
-  interface TotalEnrollmentSizeOptionCheckboxProps extends TypeOptionCheckboxProps{}
 
-  const TotalEnrollmentSizeOptionCheckbox:React.FC<TotalEnrollmentSizeOptionCheckboxProps> = ({ option, checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={option.id}
-        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={option.id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={option.id} className="text-sm ml-3 font-medium text-gray-900">
-        {option.lable}
-      </label>
-    </div>
-  );
   const [selectedTotalEnrollmentSizeOptions, setSelectedTotalEnrollmentSizeOptions] =
     useState<string[]>([]);
 
-  const handleTotalEnrollmentSizeOptionChange = (e:ChangeEvent<HTMLInputElement>) => {
+  const handleTotalEnrollmentSizeOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     if (checked) {
       setSelectedTotalEnrollmentSizeOptions((prevSelectedOptions) => [
@@ -404,49 +144,11 @@ interface MinorityCheckboxProps extends CampusSettingOptionCheckboxProps{
     }
   };
 
-  const specializedMissionOptions = [
-    {
-      id: "womens-college",
-      label: "Women's College",
-    },
-    {
-      id: "mens-college",
-      label: "Men's College",
-    },
-    {
-      id: "coordinate",
-      label: "Coordinate",
-    },
-    {
-      id: "co-ed",
-      label: "Co-Ed",
-    },
-    {
-      id: "religious-affiliation",
-      label: "Religious Affiliation",
-    },
-  ];
-interface SpecializedMissionOptionCheckboxProps extends FirstYearOptionCheckboxProps{}
 
-  const SpecializedMissionOptionCheckbox:React.FC<SpecializedMissionOptionCheckboxProps> = ({ option, checked, onChange }) => (
-    <div className="flex items-center my-2">
-      <input
-        type="checkbox"
-        name={option.id}
-        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-        id={option.id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label htmlFor={option.id} className="text-sm ml-3 font-medium text-gray-900">
-        {option.lable}
-      </label>
-    </div>
-  );
   const [selectedSpecializedMissionOptions, setSelectedSpecializedMissionOptions] =
     useState<string[]>([]);
 
-  const handleSpecializedMissionOptionChange = (e:ChangeEvent<HTMLInputElement>) => {
+  const handleSpecializedMissionOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     if (checked) {
       setSelectedSpecializedMissionOptions((prevSelectedOptions) => [
@@ -461,8 +163,8 @@ interface SpecializedMissionOptionCheckboxProps extends FirstYearOptionCheckboxP
   };
 
   return (
-    <div className='grid  shadow-md'>
-      <div className='bg-white w-[90%] md:w-[400px] mx-4 text-black flex flex-col my-20 gap-4'>
+    <div className='grid  shadow-md bg-white  '>
+      <div className='w-[90%] md:w-[400px]  text-black flex flex-col mt-20 gap-4'>
         <div className="flex items-center my-2">
           <input type="checkbox" name="undergrad" className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded" id="undergrad" />
           <label htmlFor="undergrad" className="text-sm ml-3 font-medium text-gray-900">Accepts undergraduate applications</label>
@@ -481,7 +183,7 @@ interface SpecializedMissionOptionCheckboxProps extends FirstYearOptionCheckboxP
           {showStates["region"] && (
             <div className="my-2">
               {regions.map((region) => (
-                <RegionCheckbox
+                <RegionCheckBox
                   key={region}
                   region={region}
                   checked={selectedRegions.includes(region)}
@@ -490,32 +192,43 @@ interface SpecializedMissionOptionCheckboxProps extends FirstYearOptionCheckboxP
               ))}
             </div>
           )}
-          <Button id='undergraduate' onClick={toggleShow} showArrowDown={showStates['undergraduate']}>Application for undergraduate students</Button>
+          <Button id='undergraduate' onClick={toggleShow} showArrowDown={showStates['undergraduate']}>
+            Application for undergraduate students
+          </Button>
           {showStates["undergraduate"] && (
             <div className="my-2">
-              {firstYearOptions.map((option) => (
+              {firstYearOptions.map((option: any) => (
                 <FirstYearOptionCheckbox
                   key={option.id}
-                  lable={option.label}
+                  id={option.id}
+                  label={option.label}
                   checked={selectedFirstYearOptions.includes(option.id)}
                   onChange={handleFirstYearOptionChange}
                 />
               ))}
             </div>
           )}
-          <Button id='masters' onClick={toggleShow} showArrowDown={showStates['masters']}>Application for masters students</Button>
+
+          <Button
+            id="masters"
+            onClick={toggleShow}
+            showArrowDown={showStates["masters"]}
+          >
+            Application for masters students
+          </Button>
           {showStates["masters"] && (
             <div className="my-2">
               {mastersOptions.map((option) => (
-                <MastersOptionCheckbox
+                <MastersOptionCheckBox
                   key={option.id}
-                  lable={option.label}
-                  checked={selectedmastersOptions.includes(option.id)}
+                  lable={option.lable}
+                  checked={selectedMastersOptions.includes(option.id)}
                   onChange={handleMastersOptionChange}
                 />
               ))}
             </div>
           )}
+
           <Button id='campus-setting' onClick={toggleShow} showArrowDown={showStates['campus-setting']}>Campus setting</Button>
           {showStates["campus-setting"] && (
             <div className="my-2">
@@ -555,7 +268,7 @@ interface SpecializedMissionOptionCheckboxProps extends FirstYearOptionCheckboxP
           {showStates["type"] && (
             <div className="my-2">
               {typeOptions.map((option) => (
-                <TypeOptionCheckbox
+                <FirstYearOptionCheckbox
                   key={option.id}
                   lable={option.label}
                   checked={selectedTypeOptions.includes(option.id)}
@@ -568,7 +281,7 @@ interface SpecializedMissionOptionCheckboxProps extends FirstYearOptionCheckboxP
           {showStates["total-enrollment-size"] && (
             <div className="my-2">
               {totalEnrollmentSizeOptions.map((option) => (
-                <TotalEnrollmentSizeOptionCheckbox
+                <TotalEnrollmentSizeOptionCheckBox
                   key={option.id}
                   lable={option.label}
                   checked={selectedTotalEnrollmentSizeOptions.includes(option.id)}
@@ -581,8 +294,8 @@ interface SpecializedMissionOptionCheckboxProps extends FirstYearOptionCheckboxP
           {showStates["specialized-mission"] && (
             <div className="my-2">
               {specializedMissionOptions.map((option) => (
-                <SpecializedMissionOptionCheckbox
-                  key={option.id}
+                <SpecializedMissionOptionCheckBox
+                  key={option}
                   lable={option.label}
                   checked={selectedSpecializedMissionOptions.includes(option.id)}
                   onChange={handleSpecializedMissionOptionChange}

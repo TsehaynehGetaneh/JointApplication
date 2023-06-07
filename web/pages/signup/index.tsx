@@ -179,8 +179,7 @@ const Signup:React.FC = () => {
                 className="text-blue-500 focus:outline-none focus:underline hover:underline"
               >
                 Login
-              </Link>
-              .
+              </Link>            
             </p>
           </div>
         </div>

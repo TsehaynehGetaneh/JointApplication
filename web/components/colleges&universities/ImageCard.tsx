@@ -2,9 +2,17 @@ import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 
-function ImageCard({ imageUrl, collegeName, location }) {
+interface ImageCardProps {
+    imageUrl: string;
+    collegeName: string;
+    location: string;
+    id:string;
+    onClick: () => void;
+  }
+  
+const ImageCard:React.FC<ImageCardProps>= ({ id,imageUrl, collegeName, location })=>{
     return (
-        <Link href={collegeName} className="border border-gray-300 shadow-md rounded-md h-[350px] w-[250px] text-black  flex flex-col gap-10 cursor-pointer">
+        <Link href={`/explore/${id}`} className="border border-gray-300 shadow-md rounded-md h-[350px] w-[250px] text-black  flex flex-col gap-10 cursor-pointer">
             <div className="flex" style={{ height: '60%' }}>
                 <Image
                     width={250}

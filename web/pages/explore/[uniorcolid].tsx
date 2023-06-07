@@ -1,28 +1,109 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { FcHome } from 'react-icons/fc'
 import { BiMinus } from 'react-icons/bi'
 import { BsPlus } from 'react-icons/bs'
 import { IoIosArrowForward } from 'react-icons/io'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { log } from 'console'
 
 
-const College: React.FC = () => {
+
+interface Props{
+  collegeName:[];
+}
+
+interface Deadline {
+  _id: string;
+  term: string;
+  level: string;
+  deadline: string;
+}
+
+interface ApplicationFee {
+  _id: string;
+  type: string;
+  amount: string;
+}
+
+interface TestPolicy {
+  type: string;
+  details: string;
+  _id: string;
+}
+
+interface Evaluations {
+  other: {
+    optional: number;
+  };
+  coursesAndGrades: string;
+  recommendations: string[];
+  teacherEvaluations: string;
+  _id: string;
+}
+
+interface WritingRequirements {
+  personalEssay: string;
+  collegeQuestions: string;
+  writingSupplement: string;
+  _id: string;
+}
+
+interface University {
+  _id: string;
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  links: string;
+  deadlines: Deadline[];
+  applicationFees: ApplicationFee[];
+  testPolicy: TestPolicy;
+  evaluations: Evaluations;
+  additionalInfo: string;
+  writingRequirements: WritingRequirements;
+}
+
+ const  College: React.FC<Props> =  ({collegeName}) => {
+  
   const [showMore, setShowMore] = useState(false)
+  const [universityData, setuniversityData] = useState<University[]>([]);
+  const router = useRouter();
+  const {uniorcolid} = router.query;
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
+
+	async function fetchData() {
+		try {
+    const response = await fetch(`http://localhost:9000/api/v1/universities/${uniorcolid}`);
+			const universityData = await response.json();
+			setuniversityData(universityData); 
+      console.log(universityData);
+      
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	}
 
   return (
+  
     <section className="relative">
       {/* College background image */}
       <div className="relative">
       <div className="absolute inset-0">
-        <Image
+       { <Image
           src="https://th.bing.com/th/id/OIP.MSsF3WNxvYHyRjLirXVG3gHaE8?w=266&h=180&c=7&r=0&o=5&pid=1.7"
-          alt="college name"
+          alt={universityData [0]?.name}
           layout="fill"
           objectFit="cover"
           priority
-        />
+        />}
         <div className="absolute inset-0 opacity-75"></div>
       </div>
       {/* College content */}
@@ -30,7 +111,7 @@ const College: React.FC = () => {
         <div className=" pt-32 pb-48 flex flex-col">
           <h1 className="text-4xl font-extrabold tracking-tight text-white
            sm:text-5xl md:text-6xl ">
-            Hawassa University
+            {universityData[0]?.name}
           </h1>
           <div className="rounded-full md:w-[250px] shadow mt-8 py-6 border border-transparent text-base 
             font-medium text-center text-black bg-white hover:bg-gray-200 md:py-3 md:text-lg md:px-10">
@@ -51,7 +132,7 @@ const College: React.FC = () => {
         <Link href={'/explore'} className='cursor-pointer'>Explore
           <span><IoIosArrowForward className='inline cursor-pointer' />
           </span></Link>
-        <p>Hawassa University</p>
+        <p>{universityData[0]?.name}</p>
       </div>
       {/* Additional section */}
       <div className="relative py-16">
@@ -60,7 +141,7 @@ const College: React.FC = () => {
             Established in 1872, as the first University College in Wales,
             Aberystwyth University is one of the UK’s most important institutions.
             Our reputation for research power, teaching excellence, graduate employability
-            and our unbelievable location are what set us apart from other universities.
+            and our unbelievable location are what set us apart from other university.
           </p>
           {showMore && <> <p className="mt-4 max-w-7xl text-gray-700">
             Aberystwyth is a vibrant and welcoming university town in a stunning location on
@@ -94,7 +175,7 @@ const College: React.FC = () => {
               Accepts first-year applications
             </button>
             <button className="rounded-full bg-[#b6d961] p-2">
-              United Kingdom
+              {universityData[0]?.address}
             </button>
             <button className="rounded-full bg-[#b6d961] p-2">
               Public
@@ -227,7 +308,9 @@ const College: React.FC = () => {
         </div>
       </div>
     </section>
+  
   )
 }
 
 export default College
+

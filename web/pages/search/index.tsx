@@ -1,5 +1,5 @@
 import ApplicantNav from '@/components/ApplicantNav'
-import SearchCollegeOrUni from '@/components/find-college/SearchCollege'
+import SearchCollegeOrUni from '@/components/find-college/SearchCollegeOrUni'
 import React from 'react'
 
 function index() {
