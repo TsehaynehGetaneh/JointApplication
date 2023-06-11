@@ -16,7 +16,7 @@ const planLinks: LinkItem[] = [
 ];
 
 const applyCollegeLinks: LinkItem[] = [
-  { text: "Undergraduate application guide", href: "apply/first-year-students" },
+  { text: "Undergraduate application guide", href: "apply/undergraduate-students" },
   { text: "Application letter prompts", href: "apply/essay-prompts" },
 ];
 
