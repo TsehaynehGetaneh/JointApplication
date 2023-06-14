@@ -5,7 +5,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import Family from '@/components/applicant/common/Family'
 import PersonalEssay from '@/components/applicant/common/PersonalEssay'
-import Profile from '@/components/applicant/common/Profile'
+import Profile from '@/components/applicant/common/profile/Profile'
 
 
 function Others() {

@@ -1,6 +1,6 @@
 import ApplicantNav from '@/components/ApplicantNav'
 import Left from '@/components/applicant/Left'
-import Profile from '@/components/applicant/common/Profile'
+import Profile from '@/components/applicant/common/profile/Profile'
 import React from 'react'
 
 function Common() {

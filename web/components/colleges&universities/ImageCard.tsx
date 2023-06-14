@@ -12,11 +12,11 @@ interface ImageCardProps {
   
 const ImageCard:React.FC<ImageCardProps>= ({ id,imageUrl, collegeName, location })=>{
     return (
-        <Link href={`/explore/${id}`} className="border border-gray-300 shadow-md rounded-md h-[350px] w-[250px] text-black  flex flex-col gap-10 cursor-pointer">
+        <Link href={`/explore/${id}`} className="border border-gray-300 bg-white shadow-md rounded-md h-[350px] w-[250px] text-black  flex flex-col gap-10 cursor-pointer">
             <div className="flex" style={{ height: '60%' }}>
                 <Image
-                    width={250}
-                    height={300}
+                    width={300}
+                    height={350}
                     src={imageUrl}
                     alt={collegeName}
                     objectFit="fill"
