@@ -13,7 +13,7 @@ const SearchButton: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center mb-12">
       <div className="relative w-4/5">
         <input
           type="text"
