@@ -11,25 +11,15 @@ const dashboardRouter = require("./routes/dashboard/dashboardRoutes")
 require("dotenv").config();
 require("./config/dbConnect");
 
+const cors = require("cors");
+
 const app = express();
 
 //middlewares
 app.use(express.json()); //pass incoming payload
+app.use(cors());
 
 //routes
-//----
-//Home route
-// app.use('/',async(req,res) => {
-//   try {
-//     const posts = await Post.find();
-//     res.json({
-//       status: "success",
-//       data: posts,
-//     });
-//   } catch (error) {
-//     res.json(error);
-//   }
-// });
 //users route
 app.use("/api/v1/users/", userRouter);
 //posts route

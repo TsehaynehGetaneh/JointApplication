@@ -1,19 +1,26 @@
 import { FaSearch, FaTimes } from "react-icons/fa";
 import { useState } from "react";
 
-const SearchButton: React.FC = () => {
+interface SearchButtonProps {
+  onSearchValueChange: (value: string) => void;
+}
+
+const SearchButton: React.FC<SearchButtonProps> = ({ onSearchValueChange }) => {
   const [searchValue, setSearchValue] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    const value = e.target.value;
+    setSearchValue(value);
+    onSearchValueChange(value);
   };
 
   const handleClear = () => {
     setSearchValue("");
+    onSearchValueChange("");
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center mb-12">
       <div className="relative w-4/5">
         <input
           type="text"
@@ -39,4 +46,3 @@ const SearchButton: React.FC = () => {
 };
 
 export default SearchButton;
-
