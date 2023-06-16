@@ -13,7 +13,7 @@ const CollegeCard:React.FC<CollegeCardProps>= ({ college })=>{
                 <Image
                     width={350}
                     height={350}
-                    src="/img/plan/AAU.jpg"
+                    src={college.images.campusGate.url}
                     alt={college.name}
                     objectFit="fill"
                     objectPosition="center"
