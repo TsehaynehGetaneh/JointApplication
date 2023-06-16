@@ -1,4 +1,3 @@
-// services/user.ts
 import { User } from '@/types/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
