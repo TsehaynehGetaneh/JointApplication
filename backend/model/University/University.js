@@ -31,10 +31,20 @@ const WritingRequirementsSchema = new mongoose.Schema({
   writingSupplement: { type: String, required: true },
 });
 
+const AcademicProgramSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  level: { type: String, required: false },
+  description: { type: String, required: false },
+});
+
+const ImageSchema = new mongoose.Schema({
+  url: { type: String, required: true }
+});
+
 const UniversitySchema = new mongoose.Schema({
   name: { type: String, required: true },
   phone: { type: String, required: true },
-  email: {"type": String, required: true },
+  email: { type: String, required: true },
   address: { type: String, required: true },
   links: { type: String, required: true },
   deadlines: [{ type: DeadlineSchema, required: true }],
@@ -43,6 +53,12 @@ const UniversitySchema = new mongoose.Schema({
   evaluations: { type: EvaluationsSchema, required: true },
   additionalInfo: { type: String, required: true },
   writingRequirements: { type: WritingRequirementsSchema, required: true },
+  academicPrograms: [{ type: AcademicProgramSchema, required: true }],
+  images: {
+    logo: { type: ImageSchema, required: true },
+    insideCampus: { type: ImageSchema, required: true },
+    campusGate: { type: ImageSchema, required: true },
+  },
 });
 
 const University = mongoose.model('University', UniversitySchema);
