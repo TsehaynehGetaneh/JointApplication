@@ -11,6 +11,13 @@ export interface University {
     evaluations:         Evaluations;
     additionalInfo:      string;
     writingRequirements: WritingRequirements;
+    academicPrograms:    AcademicProgram[];
+    images:              Images;
+}
+
+export interface AcademicProgram {
+    name: string;
+    _id:  string;
 }
 
 export interface ApplicationFee {
@@ -36,6 +43,17 @@ export interface Evaluations {
 
 export interface Other {
     optional: number;
+}
+
+export interface Images {
+    logo:         CampusGate;
+    insideCampus: CampusGate;
+    campusGate:   CampusGate;
+}
+
+export interface CampusGate {
+    url: string;
+    _id: string;
 }
 
 export interface TestPolicy {

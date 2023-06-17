@@ -11,8 +11,11 @@ export const collegeApi = createApi({
     getColleges: builder.query<University[], void>({
       query: () => '/universities',
     }),
+    getCollegeById: builder.query<University, string>({
+      query: (id) => `/universities/${id}`,
+    }),
   }),
 });
 
 // Export hooks for usage
-export const { useGetCollegesQuery } = collegeApi;
+export const { useGetCollegesQuery, useGetCollegeByIdQuery } = collegeApi;
