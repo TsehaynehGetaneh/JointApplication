@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import SearchButton from "../common/SearchButton";
 import Navbar from "../common/Navbar";
 import Footer from "../common/Footer";
 import PlanCards from "./PlanCards";
@@ -36,16 +35,6 @@ const HomePage: React.FC = () => {
             >
               Start your application
             </Link>
-          </div>
-        </div>
-
-        {/* Search section */}
-        <div className="w-full py-8 bg-gray-300">
-          <div className="container mx-auto px-8">
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-              Explore more than 50 colleges on JointApplication
-            </h1>
-            <SearchButton />
           </div>
         </div>
 
