@@ -73,6 +73,7 @@ const HomePage: React.FC = () => {
               >
                 Contact our support team
               </Link>
+              
             </div>
           </div>
         </div>
