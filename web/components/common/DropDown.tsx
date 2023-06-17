@@ -36,7 +36,7 @@ const Dropdown: React.FC<DropdownProps> = ({ links, buttonText, href }) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <span>{buttonText}</span>
+        <Link href={href}>{buttonText}</Link>
         <FiChevronDown
           className={`ml-1 transition-transform duration-300 transform ${isOpen ? 'rotate-180' : 'rotate-0'}`}
         />
