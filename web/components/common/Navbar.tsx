@@ -82,25 +82,25 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Plan For College section */}
-        <div onClick={closeSearch}>
+        <Link href="/plan" onClick={closeSearch}>
           {!showSearch && (
-            <Dropdown links={planLinks} buttonText="Plan for college" href="/plan" />
+            <Dropdown links={planLinks} buttonText="Plan for college" />
           )}
-        </div>
+        </Link >
 
         {/* Apply To College section */}
-        <div onClick={closeSearch}>
+        <Link href="/apply" onClick={closeSearch}>
           {!showSearch && (
-            <Dropdown links={applyCollegeLinks} buttonText="Apply to college" href="/apply" />
+            <Dropdown links={applyCollegeLinks} buttonText="Apply to college"  />
           )}
-        </div>
+        </Link>
 
         {/* Support section */}
-        <div onClick={closeSearch}>
+        <Link href="/support" onClick={closeSearch}>
           {!showSearch && (
-            <Dropdown links={supportLinks} buttonText="Support" href="/support" />
+            <Dropdown links={supportLinks} buttonText="Support"/>
           )}
-        </div>
+        </Link>
 
         {/* Search bar */}
         <div className={`relative flex-grow flex justify-end ${showSearch ? 'w-full' : ''}`}>
