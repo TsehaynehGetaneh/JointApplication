@@ -9,6 +9,7 @@ const CollegeDetailPage = () => {
   const collegeId = router.query.id as string;
 
   const { data: college, isSuccess, isLoading, isError, error } = useGetCollegeByIdQuery(collegeId);
+  console.log(college)
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -22,7 +23,7 @@ const CollegeDetailPage = () => {
     return (
       <div>
         <Navbar />
-        <div className="bg-white text-black flex items-center justify-center h-screen">
+        <div className="bg-white">
             <CollgeDetail key={college._id} college={college} />
         </div>
         <Footer />
