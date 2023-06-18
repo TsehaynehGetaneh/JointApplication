@@ -17,8 +17,16 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+    loginUser: builder.mutation<User, Partial<User>>({
+      query: (user) => ({
+        url: '/users/login',
+        method: 'POST',
+        body: user,
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
 });
 
 // Export hooks for usage
-export const { useRegisterUserMutation } = userApi;
+export const { useRegisterUserMutation, useLoginUserMutation } = userApi;

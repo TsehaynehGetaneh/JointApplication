@@ -5,10 +5,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLoginUserMutation } from "@/store/user/user-api";
+import router from "next/router";
 
-interface FormData{
-  email:string;
-  password:string;
+interface FormData {
+  email: string;
+  password: string;
 }
 
 const schema = yup.object().shape({
@@ -16,19 +18,45 @@ const schema = yup.object().shape({
   password: yup.string().required(),
 });
 
-const SignIn:React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+const SignIn: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
-const [formData,setFormData]=useState<FormData>({email:"",password:""}) 
 
-const handleInputChange=(e:ChangeEvent<HTMLInputElement>)=>{
-    const {name,value}=e.target
-    setFormData((prevFormData)=>({...prevFormData,[name]:value}))
-}
-  const onSubmit = (data:FormData) => {
-    console.log(data);
-    toast.success("Logged in successfully!");
+  const [formData, setFormData] = useState<FormData>({ email: "", password: "" });
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+
+  const onSubmit = async (postData: FormData) => {
+    loginUser(postData)
+      .unwrap()
+      .then(() => {
+        toast.success(
+          "Logged in successfully!"
+        );
+        router.push("/dashboard");
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.data.message === "Email not Found") {
+          toast.error("You're not registered, please create an account.")
+        }
+        else if (error.data.message === "Invalid login credentials") {
+          toast.error("Your Passwrod is not correct.")
+        }
+        else {
+          toast.error("Login failed. Please try again.");
+        }
+      });
   };
 
   return (
