@@ -31,23 +31,23 @@ const Left:React.FC<LeftProps>=({Children,title})=> {
                 <div className="bg-white w-full border border-b-2 rounded-md">
                     <div className="flex gap-4 ">
                         <div className="flex flex-col gap-2 h-full bg-gray-300 w-[250px] ">
-                            <div className="bg-blue-500 px-3 py-1  text-white text-xl">Common App</div>
-                            <Link href='/common/profile' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
+                            <div className="bg-blue-500 px-3 py-1  text-white text-xl">Joint App</div>
+                            <Link href='/joint-app/profile' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
                                 Profile
                             </Link>
-                            <Link href='/common/family' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
+                            <Link href='/joint-app/family' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
                                 Family
                             </Link>
-                            <Link href='/common/education' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
+                            <Link href='/joint-app/education' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
                                 Education
                             </Link>
-                            <Link href='/common/testing' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
+                            <Link href='/joint-app/testing' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
                                 Testing
                             </Link>
-                            <Link href='/common/activities' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
+                            <Link href='/joint-app/activities' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
                                 Activities
                             </Link>
-                            <Link href='/common/writing' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
+                            <Link href='/joint-app/writing' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
                                 Writing
                             </Link>
                             <Link href='/' className="relative border-l-blue-500 border-l-[7px] text-left px-9 py-2 bg-gray-400 hover:bg-gray-500"  >
@@ -61,7 +61,7 @@ const Left:React.FC<LeftProps>=({Children,title})=> {
                                 <button className="text-gray-500 rounded-full px-3 py-1 border-2 border-gray-500 transform ease-in-out hover:border-gray-900 hover:shadow-lg hover:text-gray-900 hover:scale-110">Preview</button>
                             </div>
                             <button className="w-full bg-blue-500 px-2 py-2 text-white">
-                                <Link onClick={() => setShowForm(!showForm)} href={`/common/${title}`} className="text-md font-bold mb-6 underline">{title}</Link>
+                                <Link onClick={() => setShowForm(!showForm)} href={`/joint/${title}`} className="text-md font-bold mb-6 underline">{title}</Link>
                                 {showForm ? <IoIosArrowUp /> : <IoIosArrowDown />}
                             </button>
                             {/* //other components rendered here */}

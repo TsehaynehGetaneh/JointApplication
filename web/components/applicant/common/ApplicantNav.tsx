@@ -55,7 +55,7 @@ const ApplicantNav: React.FC = () => {
             Dashboard
           </Link>
           <Link
-            href={"/mycollegesoruniversities"}
+            href={"/my-universities"}
             className={`${activeLink === "mycolleges" ? "bg-blue-500" : "bg-gray-600"
               } text-white text-sm md:text-lg px-2 py-1 rounded hover:bg-gray-500 
             whitespace-nowrap`}
@@ -64,11 +64,11 @@ const ApplicantNav: React.FC = () => {
             My Colleges
           </Link>
           <Link
-            href={"/common"}
-            className={`${activeLink === "common" ? "bg-blue-500" : "bg-gray-600"
+            href={"/joint-app"}
+            className={`${activeLink === "joint-app" ? "bg-blue-500" : "bg-gray-600"
               } text-white text-sm md:text-lg px-2 py-1 rounded hover:bg-gray-500 
             whitespace-nowrap`}
-            onClick={() => handleClick("common")}
+            onClick={() => handleClick("joint-app")}
           >
             Joint Application
           </Link>

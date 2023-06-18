@@ -1,14 +1,14 @@
-import Left from '@/components/applicant/Left'
-import Profile from '@/components/applicant/common/profile/Profile'
+'use client'
 
 import React, { useState, useEffect } from 'react';
-import ApplicantNav from '@/components/applicant/ApplicantNav';
 import HelpSection from '@/components/applicant/common/HelpSection';
 import { NextPage } from 'next';
+import ApplicantNav from '@/components/applicant/common/ApplicantNav';
+import MyUniversities from '@/components/applicant/my-universities/MyUniversities';
 
 type ShowState = Record<string, boolean>;
 
-const Common: NextPage<{}> = () => {
+const Myuniversity: NextPage<{}> = () => {
   const [showState, setShowState] = useState<ShowState>({});
   const [optional, setOptional] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,9 +47,11 @@ const Common: NextPage<{}> = () => {
         </div>
       ) : (
         <div className="flex flex-col sm:flex-row gap-4 w-full">
-          <div>
-            <Left Children={<Profile />} title={'Profile'} />
-          </div>
+        
+                <div>
+                  <MyUniversities />
+                </div>
+            
           <HelpSection />
         </div>
       )}
@@ -57,4 +59,4 @@ const Common: NextPage<{}> = () => {
   );
 };
 
-export default Common;
+export default Myuniversity;

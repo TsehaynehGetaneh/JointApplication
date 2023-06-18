@@ -1,13 +1,13 @@
-import ApplicantNav from '@/components/applicant/ApplicantNav'
-import Left from '@/components/applicant/Left'
-import Education from '@/components/applicant/common/Education'
 import React, { useEffect, useState } from 'react'
 import router, { useRouter } from 'next/router'
-import Family from '@/components/applicant/common/family/Family'
-import PersonalEssay from '@/components/applicant/common/Essay/PersonalEssay'
-import Profile from '@/components/applicant/common/profile/Profile'
+import Family from '@/components/applicant/family/Family'
+import PersonalEssay from '@/components/applicant/essay/PersonalEssay'
+import Profile from '@/components/applicant/profile/Profile'
 import HelpSection from '@/components/applicant/common/HelpSection';
 import { NextPage } from 'next';
+import ApplicantNav from '@/components/applicant/common/ApplicantNav'
+import Left from '@/components/applicant/common/Left'
+import Education from '@/components/applicant/education/Education'
 
 
 const Others: NextPage<{}> = () => {

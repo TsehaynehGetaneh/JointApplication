@@ -1,14 +1,15 @@
-'use client'
+
+import Profile from '@/components/applicant/profile/Profile'
 
 import React, { useState, useEffect } from 'react';
-import ApplicantNav from "@/components/applicant/ApplicantNav";
-import MyUniversities from '@/components/applicant/common/MyUniversities';
 import HelpSection from '@/components/applicant/common/HelpSection';
 import { NextPage } from 'next';
+import ApplicantNav from '@/components/applicant/common/ApplicantNav';
+import Left from '@/components/applicant/common/Left';
 
 type ShowState = Record<string, boolean>;
 
-const Myuniversity: NextPage<{}> = () => {
+const JointApp: NextPage<{}> = () => {
   const [showState, setShowState] = useState<ShowState>({});
   const [optional, setOptional] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,11 +48,9 @@ const Myuniversity: NextPage<{}> = () => {
         </div>
       ) : (
         <div className="flex flex-col sm:flex-row gap-4 w-full">
-        
-                <div>
-                  <MyUniversities />
-                </div>
-            
+          <div>
+            <Left Children={<Profile />} title={'Profile'} />
+          </div>
           <HelpSection />
         </div>
       )}
@@ -59,4 +58,4 @@ const Myuniversity: NextPage<{}> = () => {
   );
 };
 
-export default Myuniversity;
+export default JointApp;

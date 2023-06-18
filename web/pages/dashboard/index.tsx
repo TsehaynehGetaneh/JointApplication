@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ApplicantNav from '@/components/applicant/ApplicantNav';
-import UniversityCard from '@/components/applicant/common/dashboard/UniversityCard';
+import UniversityCard from '@/components/applicant/dashboard/UniversityCard';
 import HelpSection from '@/components/applicant/common/HelpSection';
 import { NextPage } from 'next';
+import ApplicantNav from '@/components/applicant/common/ApplicantNav';
 
 type ShowState = Record<string, boolean>;
 

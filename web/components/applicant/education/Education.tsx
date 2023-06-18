@@ -1,5 +1,5 @@
+import { educationSchema } from '@/utils/educationSchema';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-import { educationSchema } from '../../../utils/educationSchema'
 import router from 'next/router';
 
 
