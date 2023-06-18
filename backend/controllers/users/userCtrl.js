@@ -41,23 +41,24 @@ const userRegisterCtrl = async (req, res, next) => {
 const userLoginCtrl = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    //Check if email exist
+    // Check if email exists
     const userFound = await User.findOne({ email });
     if (!userFound) {
       return next(appErr("Invalid login credentials"));
     }
-    //verify password
+
+    // Verify password
     const isPasswordMatched = await bcrypt.compare(
       password,
       userFound.password
     );
- 
+
     if (!isPasswordMatched) {
-      if (!userFound) {
-        return next(appErr("Invalid login credentials"));
-      }
+      return next(appErr("Invalid login credentials"));
     }
 
+    // If email and password combination is valid, create a JWT token
+    // Send the token and user data in the response
     res.json({
       status: "success",
       data: {
@@ -65,14 +66,13 @@ const userLoginCtrl = async (req, res, next) => {
         lastname: userFound.lastname,
         email: userFound.email,
         isAdmin: userFound.isAdmin,
-        token: generateToken(userFound._id),
+        token:  generateToken(userFound._id)
       },
     });
   } catch (error) {
     next(appErr(error.message));
   }
 };
-
 //who view my profile
 
 const whoViewedMyProfileCtrl = async (req, res, next) => {
@@ -82,7 +82,7 @@ const whoViewedMyProfileCtrl = async (req, res, next) => {
     //2. Find the user who viewed the original user
     const userWhoViewed = await User.findById(req.userAuth);
 
-    //3.Check if original and who viewd are found
+    //3.Check if original and who viewed are found
     if (user && userWhoViewed) {
       //4. check if userWhoViewed is already in the users viewers array
       const isUserAlreadyViewed = user.viewers.find(

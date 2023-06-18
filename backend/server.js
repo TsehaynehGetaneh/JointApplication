@@ -8,6 +8,8 @@ const postRouter = require("./routes/posts/postRoutes");
 const userRouter = require("./routes/users/userRoutes");
 const universityRouter = require("./routes/universities/universitiesRoutes");
 const dashboardRouter = require("./routes/dashboard/dashboardRoutes")
+const myCollegesRouter = require("./routes/myColleges/myCollegesRoutes");
+
 require("dotenv").config();
 require("./config/dbConnect");
 
@@ -15,21 +17,6 @@ const app = express();
 
 //middlewares
 app.use(express.json()); //pass incoming payload
-
-//routes
-//----
-//Home route
-// app.use('/',async(req,res) => {
-//   try {
-//     const posts = await Post.find();
-//     res.json({
-//       status: "success",
-//       data: posts,
-//     });
-//   } catch (error) {
-//     res.json(error);
-//   }
-// });
 //users route
 app.use("/api/v1/users/", userRouter);
 //posts route
@@ -42,6 +29,8 @@ app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/universities", universityRouter);
 //dashboard route
 app.use("/api/v1/dashboard",dashboardRouter);
+// mycolleges route
+app.use("/api/v1/myColleges",myCollegesRouter);
 //Error handlers middleware
 app.use(globalErrHandler);
   
