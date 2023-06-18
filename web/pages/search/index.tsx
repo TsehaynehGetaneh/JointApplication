@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HelpSection from '@/components/applicant/common/HelpSection';
 import { NextPage } from 'next';
 import ApplicantNav from '@/components/applicant/common/ApplicantNav';
-import SearchCollegeOrUni from '@/components/applicant/search/SearchCollegeOrUni';
+import SearchCollegeOrUni from '@/components/applicant/search/SearchCollege';
 
 type ShowState = Record<string, boolean>;
 
