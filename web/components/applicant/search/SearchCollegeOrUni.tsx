@@ -1,53 +1,37 @@
-'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Card from "../common/Card";
+import { University } from '@/types/university';
+import { useGetCollegesQuery } from '@/store/college/college-api';
 
-interface University {
-  id: string;
-  name: string;
-  phone: number;
-  email: string;
-  address: string;
-  links: string;
-  deadlines: {
-    id: string,
-    term: string,
-    level: string,
-    deadline: Date
-  };
-  image?: string;
-}
-const SearchCollegeOrUni: React.FC = () => {
+const SearchCollege: React.FC = () => {
+  // search states
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const [universitiesData, setuniversitiesData] = useState<University[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [addToDashboard,setAddToDashboard]=useState<University[]>([]);
-  
+  // fetched data 
+  const { data: colleges, isSuccess, isLoading, isError, error } = useGetCollegesQuery();
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-
-  async function fetchData() {
-    try {
-      const response = await fetch('http://localhost:9000/api/v1/universities');
-      const universitiesData = await response.json();
-      setuniversitiesData(universitiesData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
+  if (isError) {
+    return (
+      <div>
+        <p>Error occurred while fetching colleges.</p>
+      </div>
+    );
+  }
 
-  const filtereduniversitiesData = universitiesData?.filter((university: University) =>
+  if (!colleges || colleges.length === 0) {
+    return <p>You do not have any colleges yet.</p>;
+  }
+
+  const filteredCollges = colleges.filter((university: University) =>
     university.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     university.address.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
   return (
-   
     <div className="bg-gray-200 mr-5 ml-5 w-[80%] md:w-[1000px] border border-gray-500 min-h-[500px]">
       <div className="m-10">
         <div className="bg-white w-full border border-b-2 rounded-md">
@@ -60,6 +44,7 @@ const SearchCollegeOrUni: React.FC = () => {
             <input
               type="search"
               name="search"
+              placeholder='Enter University or City Name'
               id="search"
               className="w-full border-gray-600 py-2 px-2 focus:border-green-800 border outline-none"
               value={searchTerm}
@@ -68,15 +53,9 @@ const SearchCollegeOrUni: React.FC = () => {
             <span>Separate multiple search terms with a comma, e.g.: Kotebe, Addis Ababa</span>
           </div>
           <div>
-            <div className="overflow-y-scroll">
-              {filtereduniversitiesData?.map(university => (
-                <Card
-                  id={university?.id}
-                  src={university.image}
-                  title={university.name}
-                  location={university.address}
-                  key={university.id}
-                />
+            <div className="overflow-y-scroll h-96 m-2 p-2 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-200 rounded-lg">
+              {filteredCollges.map((college: University, index: number) => (
+                <Card key={index} college={college} />
               ))}
             </div>
           </div>
@@ -86,4 +65,4 @@ const SearchCollegeOrUni: React.FC = () => {
   );
 }
 
-export default SearchCollegeOrUni;
+export default SearchCollege;
