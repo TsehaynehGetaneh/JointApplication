@@ -7,6 +7,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, mode: 'cors' }),
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     registerUser: builder.mutation<User, Partial<User>>({
       query: (user) => ({
@@ -14,6 +15,7 @@ export const userApi = createApi({
         method: 'POST',
         body: user,
       }),
+      invalidatesTags: ['User'],
     }),
   }),
 });

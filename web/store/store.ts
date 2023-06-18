@@ -9,7 +9,7 @@ export const store = configureStore({
   },
 
   middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware().concat(collegeApi.middleware),
+  getDefaultMiddleware().concat(collegeApi.middleware, userApi.middleware),
   
 })
 

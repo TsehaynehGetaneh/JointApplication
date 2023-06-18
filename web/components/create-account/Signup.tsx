@@ -37,7 +37,7 @@ const Signup: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const [registerUser, { isLoading, error }] = useRegisterUserMutation();
 
   const [formData, setFormData] = useState<FormData>({
     firstname: "",
@@ -54,18 +54,25 @@ const Signup: React.FC = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      await registerUser(data);
-      toast.success(
-        "You are successfully registered. Sign in to access your account."
-      );
-      router.push("/sign-in"); // Navigate to "/sign-in" after successful signup
-    } catch (error) {
-      toast.error("Signup failed. Please try again.");
-    }
+  const onSubmit = (postData: FormData) => {
+    registerUser(postData)
+      .unwrap()
+      .then(() => {
+        toast.success(
+          "You are successfully registered. Sign in to access your account."
+        );
+        router.push("/sign-in");
+      })
+      .catch((error) => {
+        if (error.data.message === "User Already Exist") {
+          toast.error("Email already exists, try with another email!")
+        }
+        else {
+          toast.error("Signup failed. Please try again!");
+        }
+      });
   };
-
+  
   return (
     <div className="flex justify-center h-screen bg-[#18bfe0]">
       <div className="my-10 flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6 bg-white text-[#474747]
