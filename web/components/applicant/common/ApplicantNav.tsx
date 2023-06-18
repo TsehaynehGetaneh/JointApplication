@@ -26,7 +26,7 @@ const ApplicantNav: React.FC = () => {
         </div>
 
         {/* Account Information */}
-         <BsPersonFill className="md:hidden block text-lg"/> : 
+         <BsPersonFill className="md:hidden block text-lg"/> 
         <div className="text-sm hidden md:flex rounded p-2  space-x-2 items-center border-4 border-blue-500">
 
           <BsPersonFill className="h-5 w-5 text-gray-600 text-lg" />

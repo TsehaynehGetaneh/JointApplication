@@ -1,5 +1,5 @@
 
-import Profile from '@/components/applicant/profile/Profile'
+import Profile from '@/components/applicant/joint-app/profile/Profile'
 
 import React, { useState, useEffect } from 'react';
 import HelpSection from '@/components/applicant/common/HelpSection';

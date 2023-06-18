@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import router, { useRouter } from 'next/router'
-import Family from '@/components/applicant/family/Family'
-import PersonalEssay from '@/components/applicant/essay/PersonalEssay'
-import Profile from '@/components/applicant/profile/Profile'
+import Family from '@/components/applicant/joint-app/family/Family'
+import PersonalEssay from '@/components/applicant/joint-app/essay/PersonalEssay'
+import Profile from '@/components/applicant/joint-app/profile/Profile'
 import HelpSection from '@/components/applicant/common/HelpSection';
 import { NextPage } from 'next';
 import ApplicantNav from '@/components/applicant/common/ApplicantNav'
 import Left from '@/components/applicant/common/Left'
-import Education from '@/components/applicant/education/Education'
+import Education from '@/components/applicant/joint-app/education/Education'
 
 
 const Others: NextPage<{}> = () => {
