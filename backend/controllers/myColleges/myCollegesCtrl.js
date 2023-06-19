@@ -1,5 +1,5 @@
 const UserCollege = require("../../model/MyColleges/MyColleges");
-const college = require("../../model/University/University");
+const College = require("../../model/University/University");
 const User = require("../../model/User/User");
 
 //get my colleges 
@@ -17,12 +17,18 @@ const getMyCollegesCtrl = async (req, res) => {
   //add colleges to mycolleges
 const addCollegeCtrl = async (req, res) => {
     try {
+      //find college
+      const college = await College.findById(req.params.id);
       // find user
-      const user = await User.findUserById(req.userAuth)
+      const user = await User.findById(req.userAuth);
       // Create a new UserCollege document with the current user's ID and the ID of the college being added
       const userCollege = new UserCollege({
-        user: req.user._id,
-        college: req.body.collegeId
+        user: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        college: college._id
+        
       });
       await userCollege.save();
 

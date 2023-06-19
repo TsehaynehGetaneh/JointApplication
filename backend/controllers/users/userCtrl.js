@@ -41,34 +41,33 @@ const userRegisterCtrl = async (req, res, next) => {
 const userLoginCtrl = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    // Check if email exists
+    //Check if email exist
     const userFound = await User.findOne({ email });
     if (!userFound) {
-      return next(appErr("Invalid login credentials"));
+      return next(appErr("Email not Found"));
     }
-
-    // Verify password
+    //verify password
     const isPasswordMatched = await bcrypt.compare(
       password,
       userFound.password
     );
-
-    if (!isPasswordMatched) {
+ 
+    if (isPasswordMatched) {
+      // Password is correct, return success and data
+      res.json({
+        status: "success",
+        data: {
+          firstname: userFound.firstname,
+          lastname: userFound.lastname,
+          email: userFound.email,
+          isAdmin: userFound.isAdmin,
+          token: generateToken(userFound._id),
+        },
+      });
+    } else {
+      // Password is incorrect, return error
       return next(appErr("Invalid login credentials"));
     }
-
-    // If email and password combination is valid, create a JWT token
-    // Send the token and user data in the response
-    res.json({
-      status: "success",
-      data: {
-        firstname: userFound.firstname,
-        lastname: userFound.lastname,
-        email: userFound.email,
-        isAdmin: userFound.isAdmin,
-        token:  generateToken(userFound._id)
-      },
-    });
   } catch (error) {
     next(appErr(error.message));
   }
