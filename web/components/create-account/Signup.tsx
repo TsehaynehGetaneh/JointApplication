@@ -1,17 +1,19 @@
 import React, { ChangeEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRegisterUserMutation } from "@/store/user/user-api";
 
-interface FormData{
-  firstname:string;
-  lastname:string;
-  email:string;
-  password:string;
-  confirm:string;
+interface FormData {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  confirm: string;
 }
 
 const schema = yup.object().shape({
@@ -26,8 +28,7 @@ const schema = yup.object().shape({
     .required("Confirm password is required"),
 });
 
-
-const Signup:React.FC = () => {
+const Signup: React.FC = () => {
   const {
     register,
     handleSubmit,
@@ -36,17 +37,42 @@ const Signup:React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-  const [formData, setFormData] = useState<FormData>({ firstname: '', lastname: '', email: '', password: '', confirm: '' })
+  const [registerUser, { isLoading, error }] = useRegisterUserMutation();
+
+  const [formData, setFormData] = useState<FormData>({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    confirm: "",
+  });
+
+  const router = useRouter();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prevData) => ({ ...prevData, [name]: value }))
-  }
-  const onSubmit = (data: FormData) => {
-    toast.success("Signup successful!");
-    console.log(data);
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const onSubmit = (postData: FormData) => {
+    registerUser(postData)
+      .unwrap()
+      .then(() => {
+        toast.success(
+          "You are successfully registered. Sign in to access your account."
+        );
+        router.push("/sign-in");
+      })
+      .catch((error) => {
+        if (error.data.message === "User Already Exist") {
+          toast.error("Email already exists, try with another email!")
+        }
+        else {
+          toast.error("Signup failed. Please try again!");
+        }
+      });
+  };
+  
   return (
     <div className="flex justify-center h-screen bg-[#18bfe0]">
       <div className="my-10 flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6 bg-white text-[#474747]
@@ -63,7 +89,7 @@ const Signup:React.FC = () => {
             </p>
           </div>
           <div className="mt-8">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className={isLoading ? 'opacity-50' : ''}>
               <div>
                 <label
                   htmlFor="firstname"
@@ -121,7 +147,9 @@ const Signup:React.FC = () => {
                   className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   onChange={handleInputChange}
                 />
-                {errors.email && <span className="text-red-600">{errors.email.message}</span>}
+                {errors.email && (
+                  <span className="text-red-600">{errors.email.message}</span>
+                )}
               </div>
               <div className="flex justify-between mb-2">
                 <label
@@ -130,7 +158,9 @@ const Signup:React.FC = () => {
                 >
                   Password
                 </label>
-                {errors.password && <span className="text-red-600">{errors.password.message}</span>}
+                {errors.password && (
+                  <span className="text-red-600">{errors.password.message}</span>
+                )}
               </div>
               <input
                 type="password"
@@ -140,7 +170,6 @@ const Signup:React.FC = () => {
                 placeholder="Your Password"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                 onChange={handleInputChange}
-
               />
               <div className="flex justify-between mb-2">
                 <label
@@ -149,7 +178,9 @@ const Signup:React.FC = () => {
                 >
                   Confirm password
                 </label>
-                {errors.confirm && <span className="text-red-600">{errors.confirm.message}</span>}
+                {errors.confirm && (
+                  <span className="text-red-600">{errors.confirm.message}</span>
+                )}
               </div>
               <input
                 type="password"
@@ -159,15 +190,14 @@ const Signup:React.FC = () => {
                 placeholder="Confirm password"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                 onChange={handleInputChange}
-
               />
               <div className="mt-6">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isLoading || isSubmitting}
                   className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                 >
-                  Signup
+                  {isLoading ? "Signing up..." : "Signup"}
                 </button>
               </div>
             </form>
@@ -178,11 +208,12 @@ const Signup:React.FC = () => {
                 className="text-blue-500 focus:outline-none focus:underline hover:underline"
               >
                 sign in
-              </Link>            
+              </Link>
             </p>
           </div>
         </div>
       </div>
+      <ToastContainer /> {/* Add ToastContainer to display the pop-up messages */}
     </div>
   );
 };

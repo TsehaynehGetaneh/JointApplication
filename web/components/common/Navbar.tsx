@@ -27,6 +27,7 @@ const supportLinks: LinkItem[] = [
 
 const Navbar: React.FC = () => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
 
   const handleToggleMenu = () => {
     setShowMobileMenu(!showMobileMenu);
@@ -34,6 +35,14 @@ const Navbar: React.FC = () => {
 
   const closeMobileMenu = () => {
     setShowMobileMenu(false);
+  };
+
+  const toggleSearch = () => {
+    setShowSearch(!showSearch);
+  };
+
+  const closeSearch = () => {
+    setShowSearch(false);
   };
 
   return (
@@ -61,43 +70,60 @@ const Navbar: React.FC = () => {
 
       {/* Nav links and Account section */}
       <div
-        className={`md:flex md:flex-row md:gap-x-7 items-center ${showMobileMenu ? 'flex flex-col mt-4' : ''}`}
+        className={`md:flex md:flex-row md:gap-x-7 md:items-center whitespace-nowrap  
+        ${showMobileMenu ? 'flex flex-col  gap-y-6 mt-6' : 'hidden md:flex'}`}
         style={{ flexBasis: showMobileMenu ? '100%' : 'auto' }}
       >
         {/* Find A College section */}
-        <div className="text-lg hover:text-blue-800" onClick={closeMobileMenu}>
-          <Link href="/explore">Find A College</Link>
+        <div className={`text-lg hover:text-blue-800 ${showSearch ? 'hidden' : ''} ${showMobileMenu ? '' : 'md:flex'}`} onClick={closeSearch}>
+          {!showSearch && (
+            <Link href="/explore">Find A College</Link>
+          )}
         </div>
 
         {/* Plan For College section */}
-        <div className="" onClick={closeMobileMenu}>
-          <Dropdown links={planLinks} buttonText="Plan for college" href="/plan" />
-        </div>
+        <Link href="/plan" onClick={closeSearch}>
+          {!showSearch && (
+            <Dropdown links={planLinks} buttonText="Plan for college" />
+          )}
+        </Link >
 
         {/* Apply To College section */}
-        <div className="" onClick={closeMobileMenu}>
-          <Dropdown links={applyCollegeLinks} buttonText="Apply to college" href="/apply" />
-        </div>
+        <Link href="/apply" onClick={closeSearch}>
+          {!showSearch && (
+            <Dropdown links={applyCollegeLinks} buttonText="Apply to college"  />
+          )}
+        </Link>
 
         {/* Support section */}
-        <div className="" onClick={closeMobileMenu}>
-          <Dropdown links={supportLinks} buttonText="Support" href="/support" />
-        </div>
+        <Link href="/support" onClick={closeSearch}>
+          {!showSearch && (
+            <Dropdown links={supportLinks} buttonText="Support"/>
+          )}
+        </Link>
 
         {/* Search bar */}
-        <div onClick={closeMobileMenu}>
-          <SearchBar />
+        <div className={`relative flex-grow flex justify-end ${showSearch ? 'w-full' : ''}`}>
+          {!showSearch && (
+            <button
+              className="absolute top-0 right-0 h-full w-full opacity-0 cursor-pointer hidden md:block"
+              onClick={toggleSearch}
+            />
+          )}
+        
+            <SearchBar />
+        
         </div>
 
         {/* Account section */}
-        <div className="flex gap-2 text-lg">
+        <div className="flex gap-2 text-lg whitespace-nowrap">
           {/* Sign In button */}
           <Link href="/sign-in" className="bg-black text-white py-1 px-4 rounded-full" onClick={closeMobileMenu}>
             Sign In
           </Link>
 
           {/* Create Account button */}
-          <Link href="/create-account" className="border-2 border-black rounded-full py-1 px-4" onClick={closeMobileMenu}>
+          <Link href="/create-account" className="border-2 border-black rounded-full py-1 px-4 whitespace-nowrap" onClick={closeMobileMenu}>
             Create Account
           </Link>
         </div>

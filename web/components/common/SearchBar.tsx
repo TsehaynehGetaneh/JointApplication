@@ -25,7 +25,7 @@ const SearchBar: React.FC = () => {
           <input
             type="text"
             placeholder="Search"
-            className="w-80p p-2 border border-gray-300 rounded-full"
+            className="w-full p-2 border border-gray-300 rounded-full"
           />
           <FiX
             size={18}
