@@ -13,18 +13,14 @@ const applicationRouter = require("./routes/applications/applicationRoutes");
 
 require("dotenv").config();
 require("./config/dbConnect");
-const cors = require("cors");
 
 const cors = require("cors");
-
 const app = express();
 
 //middlewares
 app.use(express.json()); //pass incoming payload
 app.use(cors());
-
 //routes
-
 //users route
 app.use("/api/v1/users/", userRouter);
 //posts route
