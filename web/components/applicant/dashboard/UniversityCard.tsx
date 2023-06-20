@@ -92,19 +92,16 @@ const UniversityCard: React.FC<UniversityCardProps> = ({id,collegeName, altText,
                                 Questions – In progress
                             </a>
                         </li>
-                        <li>
-                            <MdEdit className="inline text-lg text-indigo-700" />{' '}
-                            <a href="#" className="text-blue-600 hover:underline">
-                                Recommenders and FERPA – In progress
-                            </a>
-                        </li>
                     </ul>
                     <p className="font-bold mt-4">Writing Requirements</p>
-                    <ul className="list-none mt-2">
+                    <ul className="list-none mt-2 ">
                         <li>
-                            <Link href="/" className="underline text-indigo-800">
-                                JointApplication App Personal Essay - Optional
+                            <Link href="/joint-app/writing" className="underline text-indigo-800">
+                                JointApplication App Personal Essay - 
                             </Link>
+                            <span>
+                                {'optional'}
+                            </span>
                         </li>
                         <div className="relative group">
                             {optional ? (
