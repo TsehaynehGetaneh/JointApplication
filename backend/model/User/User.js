@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
       }
     ],
    
-);
+  });
 
 //Hooks
 //pre-before record is saved

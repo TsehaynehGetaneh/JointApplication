@@ -12,7 +12,7 @@ const ApplicationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "University",
     required: false
-    
+
   },
 ],
   firstName: { type: String, required: true },
