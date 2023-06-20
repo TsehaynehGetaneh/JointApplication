@@ -1,6 +1,20 @@
 const mongoose = require('mongoose');
 // Define the schema for the college application form
 const ApplicationSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  
+  college: [
+    {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "University",
+    required: false
+    
+  },
+],
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true },
@@ -28,7 +42,7 @@ const ApplicationSchema = new mongoose.Schema({
     Grade_8: { type: Number, required: true },
     Grade_12: { type: Number, required: true }
   },
-  essays: {
+  essay: {
     essay: { type: String, required: true }
   },
   recommendations: [{
