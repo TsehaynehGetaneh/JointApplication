@@ -27,8 +27,7 @@ const userSchema = new mongoose.Schema(
         ref: "MyColleges"
       }
     ],
-   
-);
+  });
 
 //Hooks
 //pre-before record is saved
