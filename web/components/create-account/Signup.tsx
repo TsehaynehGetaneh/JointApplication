@@ -75,7 +75,7 @@ const Signup: React.FC = () => {
   
   return (
     <div className="flex justify-center h-screen bg-[#18bfe0]">
-      <div className="my-10 flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6 bg-white text-[#474747]
+      <div className="my-5 flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6 bg-white text-[#474747]
         rounded-md border-3 border-gray-200 ring-blue-400
       ">
         <div className="flex-1">
