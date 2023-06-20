@@ -6,12 +6,7 @@ const userCollegeSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
-  college:[
-     {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'University',
-  },
-]
+
 });
 
 const UserCollege = mongoose.model('UserCollege', userCollegeSchema);

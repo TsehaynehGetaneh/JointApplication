@@ -9,7 +9,9 @@ const applicationCtrl = async (req, res) => {
       // find  user
       const user = await User.findById(req.userAuth);
       // find college
+
       const userCollege = req.params._id;
+
       //create applicaton
       const applicationCreated = await Application.create({
             user: user._id,
@@ -28,11 +30,13 @@ const applicationCtrl = async (req, res) => {
 // Get all college applications
   const viewApplicationCtrl = async (req, res) => {
     try {
+
       const applications = await Application.find({})
           .populate("user")
           .populate("college");
   
       res.status(200).json(applications);
+
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Server error" });

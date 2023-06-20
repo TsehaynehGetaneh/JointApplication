@@ -20,6 +20,7 @@ const app = express();
 //middlewares
 app.use(express.json()); //pass incoming payload
 app.use(cors());
+//routes
 //users route
 app.use("/api/v1/users/", userRouter);
 //posts route
