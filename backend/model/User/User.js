@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema(
       ref: "University"
     },
   ]
-  });
+  }
+);
 
 //Compile the user model
 const User = mongoose.model("User", userSchema);
