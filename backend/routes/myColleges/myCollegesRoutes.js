@@ -5,9 +5,9 @@ const { getMyCollegesCtrl,addCollegeCtrl } = require('../../controllers/myColleg
 
 //get all added colleges in my colleges 
 //GET/api/v1/myColleges
-myCollegesRouter.get('/myColleges',isLogin, getMyCollegesCtrl);
+myCollegesRouter.get('/',isLogin, getMyCollegesCtrl);
 //add colleges from college Search to mycolleges
 // post/api/v1/myColleges
-myCollegesRouter.post('/addCollege', addCollegeCtrl);
+myCollegesRouter.post('/',isLogin, addCollegeCtrl);
 
 module.exports = myCollegesRouter;

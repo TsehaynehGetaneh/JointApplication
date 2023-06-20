@@ -5,32 +5,34 @@ const User = require("../../model/User/User");
 //get my colleges 
 const getMyCollegesCtrl = async (req, res) => {
     try {
-      const userColleges = await UserCollege.find({ user: req.user._id }).populate('college');
-      const colleges = userColleges.map(userCollege => userCollege.college);
-      res.json('myColleges', { user: req.user, colleges });
+      const myColleges = await UserCollege.find({})
+                  .populate("user")
+                  .populate("college");
+       res.status(200).json(myColleges); 
+
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
-    }
+    } 
   };
 
   //add colleges to mycolleges
 const addCollegeCtrl = async (req, res) => {
     try {
-      //find college
-      const college = await College.findById(req.params.id);
-      // find user
+     // find user
       const user = await User.findById(req.userAuth);
+       //find college
+      const college = req.params._id;
       // Create a new UserCollege document with the current user's ID and the ID of the college being added
-      const userCollege = new UserCollege({
+      const userCollege = await UserCollege.create({
         user: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        college: college._id
-        
+           ...req.body
       });
+      userCollege.college.push(college);
+      user.myColleges.push(college);
       await userCollege.save();
+      await user.save();
+      res.status(201).json(userCollege);
 
     } catch (err) {
       console.error(err);
