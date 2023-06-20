@@ -72,7 +72,6 @@ const userLoginCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
-
 //who view my profile
 
 const whoViewedMyProfileCtrl = async (req, res, next) => {
@@ -82,7 +81,7 @@ const whoViewedMyProfileCtrl = async (req, res, next) => {
     //2. Find the user who viewed the original user
     const userWhoViewed = await User.findById(req.userAuth);
 
-    //3.Check if original and who viewd are found
+    //3.Check if original and who viewed are found
     if (user && userWhoViewed) {
       //4. check if userWhoViewed is already in the users viewers array
       const isUserAlreadyViewed = user.viewers.find(
