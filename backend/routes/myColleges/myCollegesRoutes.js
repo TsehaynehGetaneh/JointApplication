@@ -8,9 +8,9 @@ const { getMyCollegesCtrl,addCollegeCtrl,removeCollegeCtrl } = require('../../co
 myCollegesRouter.get('/getColleges',isLogin, getMyCollegesCtrl);
 //add colleges from college Search to mycolleges
 // post/api/v1/myColleges
-myCollegesRouter.post('/addColleges',isLogin, addCollegeCtrl);
+myCollegesRouter.post('/addColleges/:id',isLogin, addCollegeCtrl);
 //delete colleges from myColleges
 //Delete/api/v1/removeCollege
-myCollegesRouter.delete('/removeCollege', isLogin, removeCollegeCtrl);
+myCollegesRouter.delete('/removeCollege?', isLogin, removeCollegeCtrl);
 
 module.exports = myCollegesRouter;
