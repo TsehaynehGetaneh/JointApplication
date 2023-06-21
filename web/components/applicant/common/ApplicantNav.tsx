@@ -1,10 +1,48 @@
 import Link from "next/link";
 import { BsPersonFill } from "react-icons/bs";
 import React, { useState } from "react";
+import { userData } from "@/components/sign-in/SignIn";
+
+interface Data {
+  firstname: string;
+  lastname: string;
+  email: string;
+  token: string;
+}
+
+interface ProfileProps {
+  profileData: {
+    status: string;
+    data: Data;
+  };
+}
+
+const Profile: React.FC<ProfileProps> = ({profileData}) => {
+  if (!profileData) {
+    return null; // Render nothing if profileData is undefined
+  }
+  
+  return (
+    <div>
+       <BsPersonFill className="md:hidden block text-lg"/> 
+        <div className="text-sm hidden md:flex rounded p-2  space-x-2 items-center border-4 border-blue-500">
+
+          <BsPersonFill className="h-5 w-5 text-gray-600 text-lg" />
+          <div>
+            <div className="font-bold">Welcome, {profileData.data.firstname}!</div>
+            <div>{profileData.data.email}</div>
+          </div>
+          <button className="text-white bg-black rounded-full px-3 py-1 border-2 
+          border-gray-600 transform ease-in-out hover:shadow-lg hover:scale-110">
+            Sign Out
+          </button>
+        </div>
+    </div>
+  )
+}
 
 const ApplicantNav: React.FC = () => {
   const [activeLink, setActiveLink] = useState("");
-
 
   const handleClick = (id: string) => {
     setActiveLink(id);
@@ -26,20 +64,7 @@ const ApplicantNav: React.FC = () => {
         </div>
 
         {/* Account Information */}
-         <BsPersonFill className="md:hidden block text-lg"/> 
-        <div className="text-sm hidden md:flex rounded p-2  space-x-2 items-center border-4 border-blue-500">
-
-          <BsPersonFill className="h-5 w-5 text-gray-600 text-lg" />
-          <div>
-            <div className="font-bold">Welcome, Ebisa!</div>
-            <div>CAID 36567844</div>
-            <div>mststy8@gmail.com</div>
-          </div>
-          <button className="text-white bg-black rounded-full px-3 py-1 border-2 
-          border-gray-600 transform ease-in-out hover:shadow-lg hover:scale-110">
-            Sign Out
-          </button>
-        </div>
+        <Profile profileData={userData} />
       </div>
 
       <div className="flex flex-col ml-5 md:flex-row justify-between md:items-center space-y-2 

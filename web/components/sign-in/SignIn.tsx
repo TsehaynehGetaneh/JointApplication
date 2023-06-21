@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useLoginUserMutation } from "@/store/user/user-api";
 import router from "next/router";
 
+export let userData: any;
+
 interface FormData {
   email: string;
   password: string;
@@ -34,7 +36,11 @@ const SignIn: React.FC = () => {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [loginUser, {data, isLoading, isError }] = useLoginUserMutation();
+
+  if (!isLoading || !isError) {
+    userData = data;
+  }
 
   const onSubmit = async (postData: FormData) => {
     loginUser(postData)
