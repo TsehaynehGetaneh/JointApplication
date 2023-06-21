@@ -1,7 +1,5 @@
 const express = require("express");
 const globalErrHandler = require("./middlewares/globalErrHandler");
-const Post = require("./model/Post/Post");
-const { post } = require("./routes/categories/categoryRoutes");
 const categoryRouter = require("./routes/categories/categoryRoutes");
 const commentRouter = require("./routes/comments/commentRoutes");
 const postRouter = require("./routes/posts/postRoutes");
@@ -10,9 +8,10 @@ const universityRouter = require("./routes/universities/universitiesRoutes");
 const dashboardRouter = require("./routes/dashboard/dashboardRoutes")
 const myCollegesRouter = require("./routes/myColleges/myCollegesRoutes");
 const applicationRouter = require("./routes/applications/applicationRoutes");
+const LogOutRouter = require("./middlewares/logout");
 
 require("dotenv").config();
-require("./config/dbConnect");
+require("./config/dbConnect"); 
 
 const cors = require("cors");
 const app = express();
@@ -20,6 +19,7 @@ const app = express();
 //middlewares
 app.use(express.json()); //pass incoming payload
 app.use(cors());
+app.use(LogOutRouter);
 //routes
 //users route
 app.use("/api/v1/users/", userRouter);
