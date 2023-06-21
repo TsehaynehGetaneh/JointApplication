@@ -6,7 +6,7 @@ const User = require("../../model/User/User");
    // find user
     const user = await User.findById(req.userAuth);
      //find college
-    const college = req.params._id;
+    const college = req.params.id;
     // Create a new UserCollege document with the current user's ID and the ID of the college being added
     user.myCollege.push(college);
     await user.save();
@@ -17,7 +17,7 @@ const User = require("../../model/User/User");
     res.status(500).send('Internal Server Error');
   }
 }; 
-
+ 
 //get my colleges 
 const getMyCollegesCtrl = async (req, res) => {
     try {
@@ -37,7 +37,7 @@ const removeCollegeCtrl = async (req, res) => {
     try {
         
         const userId = await User.findById(req.userAuth);
-        const collegeId = req.params._id;
+        const collegeId = req.params.id;
 
       // Use $pull operator to remove the collegeId from myCollege array
       const user = await User.findByIdAndUpdate(userId, { $pull: { myCollege: collegeId } }, { new: true });
