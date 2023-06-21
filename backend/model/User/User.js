@@ -21,6 +21,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    myCollege:[
+      {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: "University"
+    },
+  ]
   });
 
 //Compile the user model
