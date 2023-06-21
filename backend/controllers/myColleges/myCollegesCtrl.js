@@ -7,7 +7,6 @@ const User = require("../../model/User/User");
     const user = await User.findById(req.userAuth);
      //find college
     const college = req.params.id;
-    console.log(college);
     // Create a new UserCollege document with the current user's ID and the ID of the college being added
     user.myCollege.push(college);
     await user.save();
@@ -18,7 +17,7 @@ const User = require("../../model/User/User");
     res.status(500).send('Internal Server Error');
   }
 }; 
-
+ 
 //get my colleges 
 const getMyCollegesCtrl = async (req, res) => {
     try {

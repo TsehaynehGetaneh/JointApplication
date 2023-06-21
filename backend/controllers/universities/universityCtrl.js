@@ -16,7 +16,7 @@ const universityCreateCtrl = async (req, res) => {
   //read university by id
 const universityCtrl = async (req, res) => {
     const { id } = req.params;
-  
+   
     try {
       const university = await University.findById(id);
       if (university) {
