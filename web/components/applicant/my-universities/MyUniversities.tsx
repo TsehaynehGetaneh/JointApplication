@@ -3,64 +3,91 @@ import { useState } from 'react';
 import UniversityInfo from './UniversityInfo';
 import ReviewSubmit from './ReviewSubmit';
 import Left from './Left';
+import { useGetMyCollegesQuery } from '@/store/my-college/my-college-api';
+import Lodding from '../common/Loading';
+
+type ButtonItem = {
+  label: string;
+  onClick?: () => void; // Update the type of onClick
+};
 
 const MyUniversities: React.FC = () => {
-  const [showUniversityInfo, setShowUniversityInfo] = useState(false);
+  const [showUniversityInfo, setShowUniversityInfo] = useState<string | null>(null);
   const [showReviewSubmit, setShowReviewSubmit] = useState(false);
 
-  const handleShowUniversityInfo = () => {
-    setShowUniversityInfo(true);
-    setShowReviewSubmit(false);
+  const { data: colleges, isSuccess, isLoading, isError, error } = useGetMyCollegesQuery();
+
+  if (isLoading) {
+    return <Lodding />;
+  }
+
+  if (isError) {
+    return <div>Error occurred while fetching colleges.</div>;
+  }
+
+  const handleShowUniversityInfo = (collegeId: string): (() => void) => {
+    return () => {
+      setShowUniversityInfo((prevCollegeId) => prevCollegeId === collegeId ? null : collegeId);
+      setShowReviewSubmit(false);
+    };
   };
 
-  const handleShowReviewSubmit = () => {
-    setShowUniversityInfo(false);
+  const handleShowReviewSubmit = (): (() => void) => {
     setShowReviewSubmit(true);
+    return (): void => undefined;
   };
 
   return (
     <div className="container mx-auto py-8 flex bg-gray-100 gap-2">
       <div className="">
-        <h3 className="mb-2 px-4 py-2 w-[200px] text-white border-0 border-transparent shadow bg-gray-800">
+        <h3 className="mb-1 px-4 py-2 w-[200px] text-white border-0 border-transparent shadow bg-gray-800">
           My Universities
         </h3>
-        <Left
-          label="Hawassa"
-          buttons={[
-            { label: 'College Information', onClick: handleShowUniversityInfo },
-            { label: 'Active Application' },
-            { label: 'Review and Submit - Joint App', onClick: handleShowReviewSubmit },
-          ]}
-        />
+        {colleges && colleges.length > 0 ? (
+          colleges.map((college) => (
+            <Left
+              key={college._id}
+              label={college.name}
+              buttons={[
+                { label: 'College Information', onClick: handleShowUniversityInfo(college._id) },
+                { label: 'Active Application' },
+                { label: 'Review and Submit - Joint App', onClick: handleShowReviewSubmit },
+              ]}
+            />
+          ))
+        ) : (
+          <div>No colleges found.</div>
+        )}
       </div>
-      {showUniversityInfo && !showReviewSubmit && <UniversityInfo
-        name="Aberystwyth University"
-        phone="+44 (0)1970 622021"
-        email="ug-admissions@aber.ac.uk"
-        address="Penglais Campus, Penglais, Aberystwyth, Ceredigion SY23 3DD, GBR"
-        logoSrc="https://www.bing.com/images/search?view=detailV2&ccid=hb%2b7HMnT&id=683D31221715ECC02B709BB88321089C873BF636&thid=OIP.hb-7HMnTqThYdJ7x--he0QHaEK&mediaurl=https%3a%2f%2fwww.irishexaminer.com%2fcms_media%2fmodule_img%2f5066%2f2533295_29_googlediscover_CIT_campus_281_29.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.85bfbb1cc9d3a93858749ef1fbe85ed1%3frik%3dNvY7h5wIIYO4mw%26pid%3dImgRaw%26r%3d0&exph=675&expw=1200&q=university+images+mtu&simid=608047501364906460&FORM=IRPRST&ck=BE7FEF11E1A879B2D18754AF30415D2F&selectedIndex=0&idpp=overlayview&ajaxhist=0&ajaxserp=0"
-        websiteUrl="https://www.aber.ac.uk/"
-        admissionsUrl="https://www.aber.ac.uk/admissions/"
-        facebookUrl="https://www.facebook.com/AberystwythUniversity"
-        instagramUrl="https://www.instagram.com/aberystwyth.university/"
-        twitterUrl="https://twitter.com/AberUni"
-        youtubeUrl="https://www.youtube.com/user/AberystwythUni"
-        applicationDeadlines={[
-          { type: 'First Year', date: 'Rolling Admission - 07/28/2023' }
-        ]}
-        applicationFees={[
-          { type: 'First Year International Fee', amount: '$0' },
-          { type: 'First Year Domestic Fee', amount: '$0' }
-        ]}
-        recommendations={[
-          'School Report Required',
-          'Counselor Recommendation Required',
-          'Final Report Required'
-        ]}
-        savesSchoolForms={true}
-        additionalInformation="Aberystwyth University operates an inclusive admissions policy which values breadth as well as depth of study. We recognise the individual nature of every application, and our published typical offers should be viewed as a guide. Applicants are selected on their individual merits and offers can vary."
-        writingRequirement={true}
-      />}
+      {showUniversityInfo && !showReviewSubmit && colleges && colleges.length > 0 && (
+        <div>
+          {colleges.map((college) =>
+            college._id === showUniversityInfo ? (
+              <UniversityInfo
+                collegeId={college._id}
+                key={college._id}
+                name={college.name}
+                phone={college.phone}
+                email={college.email}
+                address={college.address}
+                logoSrc={college.images.logo.url}
+                websiteUrl={college.links}
+                admissionsUrl={college.links}
+                facebookUrl={college.links}
+                instagramUrl={college.links}
+                twitterUrl={college.links}
+                youtubeUrl={college.links}
+                applicationDeadlines={college.deadlines}
+                applicationFees={college.applicationFees}
+                recommendations={college.evaluations.recommendations}
+                savesSchoolForms={college.evaluations.other.optional}
+                additionalInformation={college.additionalInfo}
+                writingRequirement={college.writingRequirements}
+              />
+            ) : null
+          )}
+        </div>
+      )}
       {showReviewSubmit && <ReviewSubmit />}
       {!showUniversityInfo && !showReviewSubmit && (
         <div className="p-2">

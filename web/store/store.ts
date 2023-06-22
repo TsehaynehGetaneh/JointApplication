@@ -1,15 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { collegeApi } from '@/store/college/college-api';
+import { myCollegesApi } from './my-college/my-college-api';
 import { userApi } from '@/store/user/user-api';
 
 export const store = configureStore({
   reducer: {
     [collegeApi.reducerPath]: collegeApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [myCollegesApi.reducerPath]: myCollegesApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware().concat(collegeApi.middleware, userApi.middleware),
+  getDefaultMiddleware().concat(collegeApi.middleware, userApi.middleware,myCollegesApi.middleware),
   
 })
 

@@ -13,14 +13,14 @@ type LeftProps = {
 const Left: React.FC<LeftProps> = ({ label, buttons }) => {
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
-  const handleClick = (label: string) => {
+  const handleClick = (label: string): void => {
     setActiveButton(activeButton === label ? null : label);
   };
 
   return (
-    <div className="mb-2">
+    <div className="mb-1">
       <button
-        className="bg-gray-600 mb-2 px-4 py-2 w-[200px] text-white border-0 border-transparent hover:border-l-4 hover:border-l-blue-600 shadow hover:bg-gray-800 focus:outline-none focus:bg-blue-600"
+        className="bg-gray-600 mb-1 px-4 py-2 w-[200px] text-white border-0 border-transparent hover:border-l-4 hover:border-l-blue-600 shadow hover:bg-gray-800 focus:outline-none focus:bg-blue-600"
         onClick={() => handleClick(label)}
       >
         {label}

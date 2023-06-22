@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { Deadline, WritingRequirements } from '@/types/university';
+import { useRemoveCollegeMutation } from '@/store/my-college/my-college-api';
 
 interface UniversityInfoProps {
+  collegeId: string;
   name: string;
   phone: string;
   email: string;
@@ -15,12 +18,12 @@ interface UniversityInfoProps {
   instagramUrl: string;
   twitterUrl: string;
   youtubeUrl: string;
-  applicationDeadlines: { type: string; date: string }[];
+  applicationDeadlines: Deadline;
   applicationFees: { type: string; amount: string }[];
   recommendations: string[];
-  savesSchoolForms: boolean;
+  savesSchoolForms: number;
   additionalInformation: string;
-  writingRequirement: boolean;
+  writingRequirement: WritingRequirements;
 }
 
 const UniversityInfo: React.FC<UniversityInfoProps> = ({
@@ -41,7 +44,23 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({
   savesSchoolForms,
   additionalInformation,
   writingRequirement,
+  collegeId,
 }) => {
+
+
+  const [removeCollege, { isLoading }] = useRemoveCollegeMutation();
+
+  const handleRemoveCollege = async () => {
+    try {
+      await removeCollege({collegeId} );
+      // Handle successful removal (e.g., show a success message)
+    } catch (error) {
+      // Handle error (e.g., show an error message)
+      console.error(error);
+    }
+  };
+
+
   return (
     <div className="bg-white rounded-lg p-6 shadow text-gray-800">
       <h1 className="text-4xl font-bold border-b-2 pb-4">{name}</h1>
@@ -101,12 +120,14 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({
 
       <div className="my-4 border bg-slate-100 p-4 rounded-lg">
         <h2 className="text-lg font-semibold text-blue-950">Application Deadlines - Fall 2023</h2>
-        {applicationDeadlines.map((deadline, index) => (
-          <div key={index}>
-            <h3 className="font-semibold">{deadline.type}</h3>
-            <p>{deadline.date}</p>
+        {
+          <div >
+            <h3 className="font-semibold">{applicationDeadlines.type}</h3>
+            <p>{applicationDeadlines.level}</p>
+            <p>{applicationDeadlines.deadline}</p>
+
           </div>
-        ))}
+        }
       </div>
 
       <div className="my-4 flex flex-col space-y-2">
@@ -141,7 +162,10 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({
       </div>
 
       <div className="my-4">
-        <button className="rounded-full border-2 border-red-500 px-10 py-2 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 ease-in-out hover:scale-110 hover:rotate-1 hover:translate-y-1 hover:translate-x-1 hover:-gray-500">
+        <button
+          onClick={handleRemoveCollege}
+          disabled={isLoading}
+          className="rounded-full border-2 border-red-500 px-10 py-2 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 ease-in-out hover:scale-110 hover:rotate-1 hover:translate-y-1 hover:translate-x-1 hover:-gray-500">
           Remove
         </button>
       </div>

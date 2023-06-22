@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,6 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLoginUserMutation } from "@/store/user/user-api";
 import router from "next/router";
+import { parseCookies, setCookie } from 'nookies';
+
 
 export let userData: any;
 
@@ -38,9 +40,25 @@ const SignIn: React.FC = () => {
 
   const [loginUser, {data, isLoading, isError }] = useLoginUserMutation();
 
-  if (!isLoading || !isError) {
-    userData = data;
-  }
+  useEffect(() => {
+    if (!isLoading || !isError) {
+      setCookie(null, 'user', JSON.stringify(data), {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+    }
+  }, [isLoading,isError,data]);
+  
+  useEffect(() => {
+    if (data) {
+      const cookies = parseCookies();
+      userData = cookies.user;
+      router.push('/dashboard')
+    }
+    if (!data) {
+      router.push('/sign-in');
+    }
+  }, [data]);
 
   const onSubmit = async (postData: FormData) => {
     loginUser(postData)
@@ -149,7 +167,7 @@ const SignIn: React.FC = () => {
             </form>
 
             <p className="mt-6 text-sm text-center text-gray-400">
-              Don't have an account yet?{" "}
+              Don&apos;t have an account yet?{" "}
               <Link
                 href="/create-account"
                 className="text-blue-500 focus:outline-none focus:underline hover:underline"
