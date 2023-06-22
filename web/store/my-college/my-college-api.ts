@@ -1,8 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { University } from '@/types/university';
+import { parseCookies } from 'nookies';
 
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+const cookies=parseCookies()
+const userData=cookies.user?JSON.parse(cookies.user):null
+
+const data=userData?userData.data:null
+console.log(data);
 
 // Define a service using API routes
 export const myCollegesApi = createApi({
@@ -11,11 +18,10 @@ export const myCollegesApi = createApi({
     baseUrl: BASE_URL,
     // mode: 'cors',
     prepareHeaders: (headers, { getState }) => {
-      // const token = (getState() as RootState).auth.token
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTJiMzg3NmVkMmM0YWZmOTY2MjY0ZCIsImlhdCI6MTY4NzI5OTc1NiwiZXhwIjoxNjg3OTA0NTU2fQ.iQJoyKrnFFO0f97nNwwyiMsrSisO34CqSDSIlI0SxK4'
+    
       // pass the token to the header
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`)
+      if (data.token) {
+        headers.set('authorization', `Bearer ${data.token}`)
       }
 
       return headers
