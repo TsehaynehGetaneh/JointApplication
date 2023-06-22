@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Card from "../common/Card";
 import { University } from '@/types/university';
 import { useGetCollegesQuery } from '@/store/college/college-api';
+import Lodding from '../common/Loading';
 
 const SearchCollege: React.FC = () => {
   // search states
@@ -16,9 +17,7 @@ const SearchCollege: React.FC = () => {
 
   if (isError) {
     return (
-      <div>
-        <p>Error occurred while fetching colleges.</p>
-      </div>
+      <Lodding />
     );
   }
 
@@ -54,9 +53,9 @@ const SearchCollege: React.FC = () => {
           </div>
           <div>
             <div className="overflow-y-scroll h-96 m-2 p-2 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-200 rounded-lg">
-              {filteredCollges.map((college: University, index: number) => (
+              {filteredCollges.length > 0 ? (filteredCollges.map((college: University, index: number) => (
                 <Card key={index} college={college} />
-              ))}
+              ))) : (<div>University Not Found</div>)}
             </div>
           </div>
         </div>

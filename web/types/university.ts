@@ -27,10 +27,11 @@ export interface ApplicationFee {
 }
 
 export interface Deadline {
-    _id:      string;
-    term:     string;
-    level:    string;
-    deadline: string;
+    [x: string]: any;
+    _id?:      string;
+    term?:     string;
+    level?:    string;
+    deadline?: string;
 }
 
 export interface Evaluations {
