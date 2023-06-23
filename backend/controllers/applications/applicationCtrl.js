@@ -8,23 +8,21 @@ const applicationCtrl = async (req, res) => {
     try {
       // find  user
       const user = await User.findById(req.userAuth);
-      // find college
-      // const userCollege = req.params._id
       //create applicaton
-      const applicationCreated = await Application.create({
-            user: user._id,
-            ...req.body
-      });
-      //  
-       if(user.userApplication.length == 0)
+       
+      if(user.userApplication.length == 0)
        {
-        await applicationCreated.save();
+        const applicationCreated = await Application.create({
+          user: user._id,
+          ...req.body
+        });
         user.userApplication.push(applicationCreated._id);
+        user.applicationStatus = "Completed";
         await user.save();
         res.status(201).json(applicationCreated);
        }
       else{
-        res("you have already submitted your application")
+        res.status(200).json({ message: "you have already submitted your application"})
       }
       
 
