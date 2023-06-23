@@ -6,15 +6,6 @@ const ApplicationSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
-  
-  college: [
-    {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "University",
-    required: false
-
-  },
-],
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true },
@@ -51,7 +42,7 @@ const ApplicationSchema = new mongoose.Schema({
     email: { type: String }
   }],
   payment: {
-    amount: { type: Number },
+    amount: { type: Number }, 
     status: { type: String }
   },
   status: { type: String }

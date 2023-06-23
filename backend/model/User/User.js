@@ -26,7 +26,19 @@ const userSchema = new mongoose.Schema(
       required: false,
       ref: "University"
     },
-  ]
+  ],
+  userApplication:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: "Application"  
+  },
+  ],
+  applicationStatus: {
+    type: String,
+    enum: ["In Progress", "Completed"],
+    default: "In Progress",
+  }
   }
 );
 

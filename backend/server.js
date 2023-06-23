@@ -17,7 +17,8 @@ const cors = require("cors");
 const app = express();
 
 //middlewares
-app.use(express.json()); //pass incoming payload
+app.use(express.json());
+ //pass incoming payload
 app.use(cors());
 app.use(LogOutRouter);
 //routes
@@ -34,7 +35,7 @@ app.use("/api/v1/universities", universityRouter);
 //dashboard route
 app.use("/api/v1/dashboard",dashboardRouter);
 //application route
-app.use("/api/v1/applications", applicationRouter);
+app.use("/api/v1/application", applicationRouter);
 // mycolleges route
 app.use("/api/v1/myColleges",myCollegesRouter);
 //Error handlers middleware

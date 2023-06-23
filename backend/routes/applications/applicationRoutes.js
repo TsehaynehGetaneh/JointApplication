@@ -6,10 +6,10 @@ const {applicationCtrl,viewApplicationCtrl} = require('../../controllers/applica
 const isLogin = require("../../middlewares/isLogin");
 
 // Create a new college application
-// POST/api/v1/applications
+// POST/api/v1/application
 applicationRouter.post('/', isLogin, applicationCtrl);
 // Get all college applications
-// GET/api/v1/applications 
+// GET/api/v1/application
 applicationRouter.get('/', isLogin, viewApplicationCtrl);
 
 

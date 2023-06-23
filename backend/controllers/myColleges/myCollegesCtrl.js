@@ -1,4 +1,5 @@
 const User = require("../../model/User/User");
+const { usersCtrl } = require("../users/userCtrl");
 
  //add colleges to mycolleges
  const addCollegeCtrl = async (req, res) => {
@@ -8,11 +9,17 @@ const User = require("../../model/User/User");
      //find college
     const college = req.params.id;
     // Create a new UserCollege document with the current user's ID and the ID of the college being added
+  if(user.myCollege.includes(college))
+  {
+    res.status(200).json({ message: 'College already exists in myCollege list' });
+  }
+  else{ 
     user.myCollege.push(college);
     await user.save();
     res.status(201).json(user.myCollege);
-
-  } catch (err) {
+  }
+ } 
+  catch (err) {
     console.error(err);
     res.status(500).send('Internal Server Error');
   }
