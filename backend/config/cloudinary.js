@@ -13,10 +13,9 @@ cloudinary.config({
 //Instance of cloudinary storage
 const storage = new CloudinaryStorage({
   cloudinary,
-  allowedFormats: ["jpg", "png"],
+  allowedFormats: ["pdf", "doc", "docx"],
   params: {
     folder: "blog-api",
-    transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
 });
 

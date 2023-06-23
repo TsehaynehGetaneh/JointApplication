@@ -1,7 +1,6 @@
 const Application = require('../../model/Application/Application');
 const User = require("../../model/User/User");
-const { appErr } = require("../../utils/appErr");
-const College = require("../../model/University/University")
+
 
 // Create a new college application 
 const applicationCtrl = async (req, res) => {
