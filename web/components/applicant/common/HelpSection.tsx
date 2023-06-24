@@ -135,6 +135,7 @@ const HelpSection = () => {
                 </div>
             )}
         </div>
+        
     );
 };
 

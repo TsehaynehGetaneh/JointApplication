@@ -3,6 +3,7 @@ import Navbar from '@/components/common/Navbar';
 import { useRouter } from 'next/router';
 import { useGetCollegeByIdQuery } from '@/store/college/college-api';
 import CollgeDetail from '@/components/explore/CollegeDetail';
+import Loading from '@/components/applicant/common/Loading';
 
 const CollegeDetailPage = () => {
   const router = useRouter();
@@ -12,7 +13,7 @@ const CollegeDetailPage = () => {
   console.log(college)
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div><Loading/></div>;
   }
 
   if (isError) {
