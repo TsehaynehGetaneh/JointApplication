@@ -72,6 +72,8 @@ const userLoginCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
+
+
 //who view my profile
 
 const whoViewedMyProfileCtrl = async (req, res, next) => {
@@ -417,7 +419,7 @@ const profilePhotoUploadCtrl = async (req, res, next) => {
       await User.findByIdAndUpdate(
         req.userAuth,
         {
-          $set: {
+          $set: { 
             profilePhoto: req.file.path,
           },
         },
