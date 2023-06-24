@@ -9,6 +9,7 @@ const dashboardRouter = require("./routes/dashboard/dashboardRoutes")
 const myCollegesRouter = require("./routes/myColleges/myCollegesRoutes");
 const applicationRouter = require("./routes/applications/applicationRoutes");
 const LogOutRouter = require("./middlewares/logout");
+const adminRouter = require("./routes/admin/adminRoutes")
 
 require("dotenv").config();
 require("./config/dbConnect"); 
@@ -38,6 +39,8 @@ app.use("/api/v1/dashboard",dashboardRouter);
 app.use("/api/v1/application", applicationRouter);
 // mycolleges route
 app.use("/api/v1/myColleges",myCollegesRouter);
+//admin
+app.use("/api/v1/admin", adminRouter);
 //Error handlers middleware
 app.use(globalErrHandler);
   

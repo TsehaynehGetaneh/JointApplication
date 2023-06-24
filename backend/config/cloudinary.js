@@ -13,9 +13,9 @@ cloudinary.config({
 //Instance of cloudinary storage
 const storage = new CloudinaryStorage({
   cloudinary,
-  allowedFormats: ["pdf", "doc", "docx"],
+  allowedFormats: ["pdf"],
   params: {
-    folder: "blog-api",
+    folder: "application_files",
   },
 });
 
