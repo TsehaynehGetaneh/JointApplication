@@ -38,7 +38,11 @@ const userSchema = new mongoose.Schema(
     type: String,
     enum: ["In Progress", "Completed"],
     default: "In Progress",
-  }
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   }
 );
 

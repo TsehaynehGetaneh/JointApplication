@@ -25,7 +25,6 @@ const universityCtrl = async (req, res) => {
         res.status(404).send('University not found');
       }
     } catch (err) {
-      console.error('Error retrieving university:', err);
       res.status(500).send('Error retrieving university');
     }
   };
