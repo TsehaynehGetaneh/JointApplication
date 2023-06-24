@@ -15,10 +15,21 @@ export const collegeApi = createApi({
     }),
     getCollegeById: builder.query<University, string>({
       query: (id) => `/universities/${id}`,
-      providesTags:(result, meta, args) => [{id: args, type:'College'}]
+      providesTags: (result, meta, args) => [{ id: args, type: 'College' }],
+    }),
+    deleteCollege: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/universities/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['College'],
     }),
   }),
 });
 
 // Export hooks for usage
-export const { useGetCollegesQuery, useGetCollegeByIdQuery } = collegeApi;
+export const {
+  useGetCollegesQuery,
+  useGetCollegeByIdQuery,
+  useDeleteCollegeMutation,
+} = collegeApi;
