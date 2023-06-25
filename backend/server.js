@@ -17,9 +17,11 @@ require("./config/dbConnect");
 const cors = require("cors");
 const app = express();
 
-//middlewares
+//middlewares 
 app.use(express.json());
- //pass incoming payload
+app.use(express.urlencoded({ extended: true }));
+
+//pass incoming payload
 app.use(cors());
 app.use(LogOutRouter);
 //routes
