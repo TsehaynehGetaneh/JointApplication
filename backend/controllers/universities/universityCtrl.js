@@ -69,9 +69,9 @@ const universityDeleteCtrl = async (req, res) => {
     const { id } = req.params;
   
     try {
-      const university = await UniversityModel.findByIdAndDelete(id);
+      const university = await University.findByIdAndDelete(id);
       if (university) {
-        res.json(university);
+        res.json({ message: `${university.name} is deleted` });
       } else {
         res.status(404).send('University not found');
       }

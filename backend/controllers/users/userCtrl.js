@@ -72,6 +72,8 @@ const userLoginCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
+
+
 //who view my profile
 
 const whoViewedMyProfileCtrl = async (req, res, next) => {
@@ -451,4 +453,5 @@ module.exports = {
   adminUnblockUserCtrl,
   updatePasswordCtrl,
   deleteUserAccountCtrl,
+  adminLoginCtrl
 };
