@@ -1,11 +1,9 @@
-
-import Profile from '@/components/applicant/joint-app/profile/Profile'
-
 import React, { useState, useEffect } from 'react';
 import HelpSection from '@/components/applicant/common/HelpSection';
 import { NextPage } from 'next';
 import ApplicantNav from '@/components/applicant/common/ApplicantNav';
 import Left from '@/components/applicant/common/Left';
+import Profile from '@/components/applicant/joint-app/Profile';
 
 type ShowState = Record<string, boolean>;
 
@@ -33,7 +31,7 @@ const JointApp: NextPage<{}> = () => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center p-4 sm:p-6 md:p-2 lg:p-3">
+    <div className="relative w-full min-h-screen flex flex-col items-center p-4 sm:p-6 md:p-2 lg:p-3 bg-gray-100">
       <div className="w-full">
         <ApplicantNav />
       </div>
@@ -48,10 +46,8 @@ const JointApp: NextPage<{}> = () => {
         </div>
       ) : (
         <div className="flex flex-col sm:flex-row gap-4 w-full">
-          <div>
-            <Left Children={<Profile />} title={'Profile'} />
-          </div>
-          <HelpSection />
+              <Profile />   
+              <HelpSection />        
         </div>
       )}
     </div>

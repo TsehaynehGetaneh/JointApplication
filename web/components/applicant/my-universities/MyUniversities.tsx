@@ -56,7 +56,8 @@ const MyUniversities: React.FC = () => {
             />
           ))
         ) : (
-          <div>No colleges found.</div>
+          
+          ''
         )}
       </div>
       {showUniversityInfo && !showReviewSubmit && colleges && colleges.length > 0 && (

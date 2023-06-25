@@ -52,10 +52,8 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({
 
   const handleRemoveCollege = async () => {
     try {
-      await removeCollege({collegeId} );
-      // Handle successful removal (e.g., show a success message)
+      await removeCollege({collegeId} ); 
     } catch (error) {
-      // Handle error (e.g., show an error message)
       console.error(error);
     }
   };

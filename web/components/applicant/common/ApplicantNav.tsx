@@ -18,8 +18,16 @@ interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = ({ profileData }) => {
   //fetch our usrs from cookie
-  const cookies = parseCookies();
-  const userData = cookies.user ? JSON.parse(cookies.user) : null;
+ function isValidJSON(jsonString:any) {
+  try {
+    JSON.parse(jsonString);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+const cookies = parseCookies();
+const userData = cookies.user && typeof cookies.user === 'string' && isValidJSON(cookies.user) ? JSON.parse(cookies.user) : null;
 
   const handleSignOut = () => {
     destroyCookie(null, 'user'); // Remove the 'user' cookie

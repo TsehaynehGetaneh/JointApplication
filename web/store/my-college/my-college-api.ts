@@ -5,11 +5,18 @@ import { parseCookies } from 'nookies';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const cookies=parseCookies()
-const userData=cookies.user?JSON.parse(cookies.user):null
+function isValidJSON(jsonString:any) {
+  try {
+    JSON.parse(jsonString);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+const cookies = parseCookies();
+const userData = cookies.user ? JSON.parse(cookies.user) : null;  //  && typeof cookies.user === 'string' && isValidJSON(cookies.user)
+const data = userData ? userData.data : null;
 
-const data=userData?userData.data:null
-console.log(data);
 
 // Define a service using API routes
 export const myCollegesApi = createApi({
