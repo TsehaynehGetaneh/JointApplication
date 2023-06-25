@@ -9,12 +9,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import router from "next/router";
 import Head from "next/head";
 import { useAdminLoginMutation } from "@/store/admin/auth-api";
+import { useAppDispatch } from "@/store/hooks";
+import { setAccessToken } from "@/store/auth/authSlice";
 
 const Login: React.FC = () => {
   const [adminLogin, { isLoading }] = useAdminLoginMutation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const dispatch = useAppDispatch();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -24,10 +27,11 @@ const Login: React.FC = () => {
     event.preventDefault();
 
     try {
-      await adminLogin({
+      const res = await adminLogin({
         username: username,
         password: password
       }).unwrap();
+      dispatch(setAccessToken(res.data));
       router.push("/admin/dashboard");
     } catch (error) {
       toast.error('Invalid username or password');
@@ -105,7 +109,7 @@ const Login: React.FC = () => {
         {/* Right Section */}
         <div className="hidden md:block md:w-1/2">
           <Image
-            src="/img/support/support.jpg"
+            src="/img/support/support2.jpg"
             alt="Admin Image"
             width={600}
             height={600}

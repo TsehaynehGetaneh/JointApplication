@@ -14,7 +14,7 @@ function isValidJSON(jsonString:any) {
   return true;
 }
 const cookies = parseCookies();
-const userData = cookies.user ? JSON.parse(cookies.user) : null;  //  && typeof cookies.user === 'string' && isValidJSON(cookies.user)
+const userData = cookies.user && typeof cookies.user === 'string' && isValidJSON(cookies.user) ? JSON.parse(cookies.user) : null;  //  
 const data = userData ? userData.data : null;
 
 

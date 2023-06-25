@@ -3,9 +3,11 @@ import { collegeApi } from '@/store/college/college-api';
 import { myCollegesApi } from './my-college/my-college-api';
 import { userApi } from '@/store/user/user-api';
 import { adminApi } from './admin/auth-api';
+import { authSlice } from './auth/authSlice';
 
 export const store = configureStore({
   reducer: {
+    [authSlice.name]: authSlice.reducer,
     [adminApi.reducerPath]: adminApi.reducer,
     [collegeApi.reducerPath]: collegeApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
