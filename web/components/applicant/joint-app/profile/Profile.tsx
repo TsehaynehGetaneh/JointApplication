@@ -87,7 +87,7 @@ function Profile() {
                 <label htmlFor="region" className="block font-bold mb-2">Region*</label>
                 <select
                     id="region"
-                    className="border border-gray-400 p-2 w-full focus:outline-none focus:border-blue-600"
+                    className="border border-z-400 p-2 w-full focus:outline-none focus:border-blue-600"
                     {...formik.getFieldProps('region')}>
                     <option value="">Select a region</option>
                     <option value="addis-ababa">Addis Ababa</option>

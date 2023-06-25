@@ -12,12 +12,12 @@ const SearchCollege: React.FC = () => {
   const { data: colleges, isSuccess, isLoading, isError, error } = useGetCollegesQuery();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return  <Lodding />
   }
 
   if (isError) {
     return (
-      <Lodding />
+      <p>Loading...</p>
     );
   }
 

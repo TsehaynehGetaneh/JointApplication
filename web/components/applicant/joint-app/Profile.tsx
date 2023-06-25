@@ -1,9 +1,8 @@
+'use client'
 import React, { useState } from 'react';
 import { Formik, Field, ErrorMessage, Form, FieldArray } from 'formik';
 import { FileInputProps, InputFieldProps, StudentApplicationFormValues, validationSchema } from '@/types/applicant';
-import ReactPaginate from 'react-paginate';
 
-const items=[1,2,3,4,5,6,7,8,910]
 
 const InputField: React.FC<InputFieldProps> = ({ name, label, type, placeholder }) => (
   <div className="mb-4">
@@ -11,7 +10,7 @@ const InputField: React.FC<InputFieldProps> = ({ name, label, type, placeholder 
       {label}:
     </label>
     <Field
-      className="border rounded w-full py-2 px-3 text-grey-darker"
+      className="border rounded w-full py-2 px-3  text-grey-darker"
       type={type}
       name={name}
       id={name}
@@ -75,13 +74,14 @@ const StudentApplicationForm: React.FC = () => {
 
   const handleSubmit = (values: StudentApplicationFormValues) => {
     // Handle form submission
+    
     console.log(values);
   };
 
   return (
-    <div className="w-full bg-grey-500">
+    <div className="w-full bg-gray-100">
       <div className="container mx-auto py-8">
-        <div className="w-[80%] mx-auto  rounded shadow">
+        <div className="w-[80%] mx-auto  rounded shadow bg-white">
           <div className="mx-16 py-4 px-8 text-black text-xl font-bold border-b border-grey-500">
             Student Application
           </div>
