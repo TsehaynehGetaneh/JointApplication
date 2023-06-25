@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { University } from '@/types/university';
 import Image from 'next/image';
 import Link from 'next/link';
