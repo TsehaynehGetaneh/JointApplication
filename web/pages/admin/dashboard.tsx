@@ -5,7 +5,7 @@ import { NextPage } from "next"
 const Dashboard: NextPage = () => {
     return (
         <div>
-            <AdminDashboard name={"John Doe"} imageSrc={`/favicon.ico`} />
+            <AdminDashboard name={"Tsehayneh"} imageSrc={`/favicon.ico`} />
         </div>
     )
 }
