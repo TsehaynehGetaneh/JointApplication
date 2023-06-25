@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import the eye icons
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useLoginUserMutation } from "@/store/user/user-api";
 import router from "next/router";
 import { parseCookies, setCookie } from 'nookies';
-
 
 export let userData: any;
 
@@ -32,13 +32,14 @@ const SignIn: React.FC = () => {
   });
 
   const [formData, setFormData] = useState<FormData>({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false); // State variable for password visibility
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const [loginUser, {data, isLoading, isError }] = useLoginUserMutation();
+  const [loginUser, { data, isLoading, isError }] = useLoginUserMutation();
 
   useEffect(() => {
     if (!isLoading || !isError) {
@@ -47,8 +48,8 @@ const SignIn: React.FC = () => {
         path: '/',
       });
     }
-  }, [isLoading,isError,data]);
-  
+  }, [isLoading, isError, data]);
+
   useEffect(() => {
     if (data) {
       const cookies = parseCookies();
@@ -75,7 +76,7 @@ const SignIn: React.FC = () => {
           toast.error("You're not registered, please create an account.")
         }
         else if (error.data.message === "Invalid login credentials") {
-          toast.error("Your Passwrod is not correct.")
+          toast.error("Your Password is not correct.")
         }
         else {
           toast.error("Login failed. Please try again.");
@@ -83,12 +84,16 @@ const SignIn: React.FC = () => {
       });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <div className="flex justify-center h-screen bg-[#18bfe0] ">
       <div className="my-10 flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6 bg-white text-[#474747]
         rounded-md border-3 border-gray-200 ring-blue-400
       ">
-      <div className="flex-1">
+        <div className="flex-1">
           <div className="text-center">
             <h2 className="text-4xl font-bold text-gray-900">
               Joint<span className="text-blue-600">Application</span>
@@ -139,17 +144,25 @@ const SignIn: React.FC = () => {
                   </a>
                 </div>
 
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Your Password"
-                  className={`block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 ${
-                    errors.password ? "border-red-500" : ""
-                  }`}
-                  {...register("password")}
-                  onChange={handleInputChange}
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"} // Use dynamic input type based on the visibility state
+                    id="password"
+                    placeholder="Your Password"
+                    className={`block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                      errors.password ? "border-red-500" : ""
+                    }`}
+                    {...register("password")}
+                    onChange={handleInputChange}
+                  />
+                  <span
+                    className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Render the eye icons */}
+                  </span>
+                </div>
 
-                />
                 {errors.password && (
                   <span className="text-red-500">{errors.password.message}</span>
                 )}
@@ -163,7 +176,6 @@ const SignIn: React.FC = () => {
                   Log in
                 </button>
               </div>
-             
             </form>
 
             <p className="mt-6 text-sm text-center text-gray-400">

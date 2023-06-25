@@ -4,12 +4,8 @@ import UniversityInfo from './UniversityInfo';
 import ReviewSubmit from './ReviewSubmit';
 import Left from './Left';
 import { useGetMyCollegesQuery } from '@/store/my-college/my-college-api';
-import Lodding from '../common/Loading';
+import Loading from '../common/Loading';
 
-type ButtonItem = {
-  label: string;
-  onClick?: () => void; // Update the type of onClick
-};
 
 const MyUniversities: React.FC = () => {
   const [showUniversityInfo, setShowUniversityInfo] = useState<string | null>(null);
@@ -18,7 +14,7 @@ const MyUniversities: React.FC = () => {
   const { data: colleges, isSuccess, isLoading, isError, error } = useGetMyCollegesQuery();
 
   if (isLoading) {
-    return <Lodding />;
+    return <Loading />;
   }
 
   if (isError) {
@@ -90,7 +86,7 @@ const MyUniversities: React.FC = () => {
         </div>
       )}
       {showReviewSubmit && <ReviewSubmit />}
-      {!showUniversityInfo && !showReviewSubmit && (
+      {isLoading || !showUniversityInfo && !showReviewSubmit && (
         <div className="p-2">
           <h1 className="text-2xl font-bold mb-4">My Universities</h1>
           <p className="mb-4">
