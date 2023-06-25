@@ -1,4 +1,7 @@
-const Admin = require("../../Admin/Admin");
+const Admin = require("../../model/Admin/Admin");
+const { appErr, AppErr } = require("../../utils/appErr");
+const generateToken = require("../../utils/generateToken");
+const bcrypt = require("bcryptjs");
 
 // create admin
 const adminCreateCtrl = async (req, res, next) => {
@@ -13,7 +16,7 @@ const adminCreateCtrl = async (req, res, next) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
       //create the user
-      const user = await User.create({
+      const user = await Admin.create({
         username,
         password: hashedPassword,
       });

@@ -32,9 +32,6 @@ userRouter.post("/register", userRegisterCtrl);
 //POST/api/v1/users/login
 userRouter.post("/login", userLoginCtrl);
  
-//POST/api/v1/users/admin
-userRouter.post("/admin", isAdmin, adminLoginCtrl);
-
 //GET/api/v1/users 
 userRouter.get("/", usersCtrl);
 

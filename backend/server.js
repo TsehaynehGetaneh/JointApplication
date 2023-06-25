@@ -40,7 +40,7 @@ app.use("/api/v1/application", applicationRouter);
 // mycolleges route
 app.use("/api/v1/myColleges",myCollegesRouter);
 //admin
-app.use("/api/v1/admin",adminRouter);
+app.use("/api/v1/admin", adminRouter);
 //Error handlers middleware
 app.use(globalErrHandler);
   

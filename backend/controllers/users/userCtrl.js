@@ -419,7 +419,7 @@ const profilePhotoUploadCtrl = async (req, res, next) => {
       await User.findByIdAndUpdate(
         req.userAuth,
         {
-          $set: {
+          $set: { 
             profilePhoto: req.file.path,
           },
         },
@@ -453,5 +453,4 @@ module.exports = {
   adminUnblockUserCtrl,
   updatePasswordCtrl,
   deleteUserAccountCtrl,
-  adminLoginCtrl
 };
