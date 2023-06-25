@@ -2,10 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { University } from '@/types/university';
 import { parseCookies } from 'nookies';
 
-
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-function isValidJSON(jsonString:any) {
+function isValidJSON(jsonString: any) {
   try {
     JSON.parse(jsonString);
   } catch (e) {
@@ -13,25 +12,29 @@ function isValidJSON(jsonString:any) {
   }
   return true;
 }
-const cookies = parseCookies();
-const userData = cookies.user && typeof cookies.user === 'string' && isValidJSON(cookies.user) ? JSON.parse(cookies.user) : null;  //  
-const data = userData ? userData.data : null;
 
+function getTokenFromCookies() {
+  const cookies = parseCookies();
+  const userData = cookies.user && typeof cookies.user === 'string' && isValidJSON(cookies.user) ? JSON.parse(cookies.user) : null;
+  const data = userData ? userData.data : null;
+  return data ? data.token : null;
+}
 
 // Define a service using API routes
 export const myCollegesApi = createApi({
   reducerPath: 'myCollegesApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    // mode: 'cors',
     prepareHeaders: (headers, { getState }) => {
-    
-      // pass the token to the header
-      if (data.token) {
-        headers.set('authorization', `Bearer ${data.token}`)
+      // Get the token from cookies
+      const token = getTokenFromCookies();
+
+      // Pass the token to the header
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
       }
 
-      return headers
+      return headers;
     },
   }),
   tagTypes: ['UserCollege'],
