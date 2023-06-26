@@ -12,7 +12,7 @@ const LogOutRouter = require("./middlewares/logout");
 const adminRouter = require("./routes/admin/adminRoutes")
 
 require("dotenv").config();
-require("./config/dbConnect"); 
+require("./config/dbConnect");  
 
 const cors = require("cors");
 const app = express();

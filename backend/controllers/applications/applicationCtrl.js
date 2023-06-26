@@ -1,12 +1,9 @@
-// const express = require("express");
 const Application = require('../../model/Application/Application');
 const User = require("../../model/User/User");
-
-// const app = express();
-// app.use(express.urlencoded({ extended: true }));
+const multer = require("multer");
 
 // Create a new college application  
-const applicationCtrl = async (req, res) => { 
+const applicationCtrl = async (req, res) => {  
   try {
 
     const user = await User.findById(req.userAuth);
@@ -14,47 +11,12 @@ const applicationCtrl = async (req, res) => {
       res.status(200).json({ message: "you have already submitted your application"})
       return; 
     }
-    // const {firstName, lastName, email, phone} = req.body;
-   // read url of uploded files
-    const transcriptUrl = req.files['transcript'][0].path; 
-    const grade8Url = req.files['Grade_8'][0].path;
-    const grade12Url = req.files['Grade_12'][0].path;
-    const essayUrl = req.files['essay'][0].path;
-    const recommendationUrl = req.files['recommendation'][0].path;
-    
+ 
     // Create a new Application document with the form data and file URLs
     const application =  new Application({
-      user:user._id,
-      firstName: req.body.firstName,
-      lastName:  req.body.lastName,
-      email: req.body.email,
-      phone: req.body.phone,
-      // address: {
-      //   street,
-      //   city,
-      //   region,
-      //   zip,
-      //   country
-      // },
-      // highSchool: {
-      //   name: name,
-      //   city: cityName,
-      //   region: regionName,
-      //   graduationYear
-      //},
-      transcript: transcriptUrl, 
-      national_exam: {
-        Grade_8: grade8Url,  
-        Grade_12: grade12Url
-      },
-      essay: {
-        essay: essayUrl,
-        // text: req.body.essayText
-      },
-      recommendation: recommendationUrl
-      
+      user: user._id,
+      ...req.body,
     });
-
     // Save the new Application document to the database
     await application.save();
     user.userApplication.push(application._id);
@@ -64,10 +26,33 @@ const applicationCtrl = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Server error' })
+  
   }
 };
+// get all applications
+const viewApplicationCtrl = async (req, res) => {  
+try {
+  const application = await Application.find()
+    .populate('user', '-password')
+    .exec();
 
+  if (!application) {
+    // handle case where application with the given ID doesn't exist
+    res.status(404).json({ error: 'Application not found' });
+    return;
+  }
+
+  // return the application with the populated user field
+  res.json(application);
+  return;
+} catch (err) {
+  // handle error
+  console.error(err);
+  res.status(500).json({ error: 'Internal server error' });
+
+}
+};
 module.exports = {
   applicationCtrl, 
-  // viewApplicationCtrl
+ viewApplicationCtrl
 };

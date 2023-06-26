@@ -50,7 +50,6 @@ const adminLoginCtrl = async (req, res, next) => {
           status: "success",
           data: {
             username: userFound.username,
-            email: userFound.email,
             isAdmin: userFound.isAdmin,
             token: generateToken(userFound._id),
           },
