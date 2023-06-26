@@ -13,6 +13,7 @@ export interface University {
     writingRequirements: WritingRequirements;
     academicPrograms:    AcademicProgram[];
     images:              Images;
+    admission_plan?:      string;
 }
 
 export interface AcademicProgram {
@@ -27,10 +28,11 @@ export interface ApplicationFee {
 }
 
 export interface Deadline {
-    _id:      string;
-    term:     string;
-    level:    string;
-    deadline: string;
+    [x: string]: any;
+    _id?:      string;
+    term?:     string;
+    level?:    string;
+    deadline?: string;
 }
 
 export interface Evaluations {
@@ -67,4 +69,14 @@ export interface WritingRequirements {
     collegeQuestions:  string;
     writingSupplement: string;
     _id:               string;
+}
+
+
+export type UniversityCardProps = {
+    collegeId:string;
+    optional: boolean;
+    imageSrc: string;
+    altText: string;
+    collegeName:string;
+  
 }
