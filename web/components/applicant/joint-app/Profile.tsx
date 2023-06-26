@@ -73,7 +73,7 @@ const StudentApplicationForm: React.FC = () => {
   const [itemOffset, setItemOffset] = useState(0);
 
   const handleSubmit = (values: StudentApplicationFormValues) => {
-    // Handle form submission
+    // Handle form submissions
     
     console.log(values);
   };
