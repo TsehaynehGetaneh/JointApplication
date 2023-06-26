@@ -28,6 +28,7 @@ const adminCreateCtrl = async (req, res, next) => {
       next(appErr(error.message));
     }
   };
+  
 //admin login
 const adminLoginCtrl = async (req, res, next) => {
     const { username, password } = req.body;
@@ -49,7 +50,6 @@ const adminLoginCtrl = async (req, res, next) => {
           status: "success",
           data: {
             username: userFound.username,
-            email: userFound.email,
             isAdmin: userFound.isAdmin,
             token: generateToken(userFound._id),
           },
