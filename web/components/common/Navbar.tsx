@@ -10,9 +10,8 @@ interface LinkItem {
 }
 
 const planLinks: LinkItem[] = [
-  { text: "Why college matters", href: "plan/why-college-matters" },
+  { text: "Why college matters", href: "plan/why-university-matters" },
   { text: "Paying for college", href: "plan/paying-for-college" },
-  { text: "Your path to college", href: "plan/your-path-to-college" },
 ];
 
 const applyCollegeLinks: LinkItem[] = [
