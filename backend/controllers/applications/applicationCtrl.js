@@ -14,15 +14,21 @@ const applicationCtrl = async (req, res) => {
  
     // Create a new Application document with the form data and file URLs
     const application =  new Application({
-      user: user._id,
-      ...req.body,
+     user: user._id,
+     ...req.body, 
+     transcript: req.files['transcript'][0].path,
+     Grade_8: req.files['Grade_8'][0].path,
+     Grade_12: req.files['Grade_12'][0].path,
+     essay: req.files['essay'][0].path,
+     recommendation: req.files['recommendation'][0].path 
     });
-    // Save the new Application document to the database
+    
+    // Save the new Application document to the database 
     await application.save();
     user.userApplication.push(application._id);
     user.applicationStatus = "Completed";
     await user.save();
-    res.status(201).json(application);
+    res.status(201).json(application); 
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Server error' })

@@ -9,10 +9,15 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());  
 app.use(bodyParser.urlencoded({ extended:true }));
+
 // Create a new college application
 // POST/api/v1/application 
-
-applicationRouter.post('/', isLogin, applicationCtrl); 
+applicationRouter.post('/', isLogin, upload.fields([
+    { name: 'transcript', maxCount: 1},
+    { name: 'Grade_8', maxCount: 1 }, 
+    { name: 'Grade_12', maxCount: 1 },
+    { name: 'essay', maxCount: 1 },
+    { name: 'recommendation', maxCount: 1 }]), applicationCtrl); 
 // Get all college application
 // GET/api/v1/application
 applicationRouter.get('/', isLogin, viewApplicationCtrl);

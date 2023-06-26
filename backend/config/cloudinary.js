@@ -17,9 +17,7 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "application_files",
   },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
+
 });
 
 module.exports = storage;

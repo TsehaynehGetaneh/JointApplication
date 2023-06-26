@@ -6,10 +6,10 @@ const ApplicationSchema = new mongoose.Schema({
     ref: "User", 
     required: true
   },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true },
-  phone: { type: String, required: true },
+  firstName: { type: String, required: false },
+  lastName: { type: String, required: false },
+  email: { type: String, required: false },
+  phone: { type: String, required: false },
   address: {
     street: { type: String },
     city: { type: String },
@@ -18,16 +18,16 @@ const ApplicationSchema = new mongoose.Schema({
     country: { type: String }
   },
   highSchool: {
-    name: { type: String, required: true},
-    cityName: { type: String, required: true},
-    regionName: { type: String, required: true},
-    graduationYear: { type: Number, required: true}
+    name: { type: String, required: false },
+    cityName: { type: String, required: false },
+    regionName: { type: String, required: false },
+    graduationYear: { type: Number, required: false }
   }, 
-  //grade 8 national exam id 
-  Grade_8:{type: String, required: true},
-  //grade 12 university entrance exame id
-  Grade_12: {type: String, required: true},
-  essay: { type: String, required: true },
+  transcript:  { type: String, required: false },
+  Grade_8: { type: String, required: false },
+  Grade_12: { type: String, required: false },
+  essay: { type: String, required: false },
+  recommendation: { type: String, required: false }
 });
   
 // Define the model for the college application form
