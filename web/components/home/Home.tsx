@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
               Apply to college for the first time. Navigate your entire college application journey with JointApplication.
             </p>
             <Link
-              href=""
+              href="/create-account"
               className="bg-white text-black py-4 px-6 rounded-full font-semibold shadow-lg hover:bg-gray-300"
             >
               Start your application
@@ -57,7 +57,7 @@ const HomePage: React.FC = () => {
             <div className="w-full sm:w-1/2 flex flex-col gap-12">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">Have a question?</h1>
               <Link
-                href="/help"
+                href="/support"
                 className="bg-white text-black py-4 px-10 rounded-full font-semibold shadow-lg hover:bg-gray-300 w-full sm:w-auto"
               >
                 Contact our support team

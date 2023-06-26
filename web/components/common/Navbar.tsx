@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
         </Link>
 
         {/* Search bar */}
-        <div className={`relative flex-grow flex justify-end ${showSearch ? 'w-full' : ''}`}>
+        {/* <div className={`relative flex-grow flex justify-end ${showSearch ? 'w-full' : ''}`}>
           {!showSearch && (
             <button
               className="absolute top-0 right-0 h-full w-full opacity-0 cursor-pointer hidden md:block"
@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
         
             <SearchBar />
         
-        </div>
+        </div> */}
 
         {/* Account section */}
         <div className="flex gap-2 text-lg whitespace-nowrap">
